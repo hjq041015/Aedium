@@ -33,8 +33,11 @@ function NavBar() {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <button className="btn btn-ghost text-xl lg:btn-lg lg:w-32">
-            daisyUI
+          <button
+            onClick={() => navigate({ to: "/" })}
+            className="btn btn-ghost text-xl lg:btn-lg lg:w-32"
+          >
+            Aedium
           </button>
           <input
             type="text"
