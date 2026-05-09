@@ -1,3 +1,4 @@
+import { NotePencilIcon } from "@phosphor-icons/react";
 import { useNavigate } from "@tanstack/react-router";
 
 function NavBar() {
@@ -32,22 +33,6 @@ function NavBar() {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <label htmlFor="navbar-1-toggle" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </label>
           <button className="btn btn-ghost text-xl lg:btn-lg lg:w-32">
             daisyUI
           </button>
@@ -57,59 +42,18 @@ function NavBar() {
             className="input input-bordered w-32 lg:input-lg lg:w-50 mr-1"
           />
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <button>Item 1</button>
-            </li>
-            <li>
-              <details>
-                <summary>Parent</summary>
-                <ul className="p-2 bg-base-100 w-40 z-1">
-                  <li>
-                    <button>Submenu 1</button>
-                  </li>
-                  <li>
-                    <button>Submenu 2</button>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <button>Item 3</button>
-            </li>
-          </ul>
-        </div>
         <div className="navbar-end">
+          <button className="btn hidden sm:inline-flex btn-neutral btn-outline mr-2">
+            <NotePencilIcon size={24} />
+            Write
+          </button>
           <button
             onClick={() => navigate({ to: "/login" })}
-            className="btn btn-primary lg:btn-lg lg:w-32"
+            className="btn  btn-primary  lg:w-24"
           >
             Login
           </button>
         </div>
-      </div>
-
-      <div className="collapse-content lg:hidden z-1">
-        <ul className="menu">
-          <li>
-            <button>Item 1</button>
-          </li>
-          <li>
-            <button>Parent</button>
-            <ul>
-              <li>
-                <button>Submenu 1</button>
-              </li>
-              <li>
-                <button>Submenu 2</button>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <button>Item 3</button>
-          </li>
-        </ul>
       </div>
     </div>
   );
