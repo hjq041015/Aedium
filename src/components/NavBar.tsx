@@ -43,12 +43,17 @@ function NavBar() {
           />
         </div>
         <div className="navbar-end">
-          <button className="btn hidden sm:inline-flex btn-neutral btn-outline mr-2">
+          <button className="btn hidden sm:inline-flex btn-ghost mr-2">
             <NotePencilIcon size={24} />
             Write
           </button>
           <button
-            onClick={() => navigate({ to: "/login" })}
+            onClick={() =>
+              navigate({
+                to: "/auth/$pathname",
+                params: { pathname: "sign-in" },
+              })
+            }
             className="btn  btn-primary  lg:w-24"
           >
             Login
