@@ -46,7 +46,14 @@ function NavBar() {
           />
         </div>
         <div className="navbar-end">
-          <button className="btn hidden sm:inline-flex btn-ghost mr-2">
+          <button
+            onClick={() =>
+              navigate({
+                to: "/editor",
+              })
+            }
+            className="btn hidden sm:inline-flex btn-ghost mr-2"
+          >
             <NotePencilIcon size={24} />
             Write
           </button>

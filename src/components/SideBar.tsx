@@ -27,6 +27,7 @@ function SideBar() {
           </li>
           <li>
             <button
+              onClick={() => navigate({ to: "/editor" })}
               className="is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-xl bg-[var(--color-secondary)] text-secondary-content font-medium shadow-sm transition-all hover:-translate-y-0.5 hover:brightness-90 hover:shadow-md"
               data-tip="Write"
             >
