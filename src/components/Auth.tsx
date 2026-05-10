@@ -1,5 +1,6 @@
 import { AuthView } from "@neondatabase/neon-js/auth/react";
 import { Route } from "../routes/auth.$pathname";
+import { Route as indexRoute } from "../routes/index";
 
 function Auth() {
   const { pathname } = Route.useParams();
@@ -13,7 +14,11 @@ function Auth() {
         minHeight: "100vh",
       }}
     >
-      <AuthView className="auth-page" pathname={pathname} />
+      <AuthView
+        className="auth-page"
+        pathname={pathname}
+        redirectTo={pathname === "sign-out" ? indexRoute.to : undefined}
+      />
     </div>
   );
 }

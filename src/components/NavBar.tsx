@@ -1,3 +1,8 @@
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@neondatabase/neon-js/auth/react";
 import { NotePencilIcon } from "@phosphor-icons/react";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -46,28 +51,37 @@ function NavBar() {
           />
         </div>
         <div className="navbar-end">
-          <button
-            onClick={() =>
-              navigate({
-                to: "/editor",
-              })
-            }
-            className="btn hidden sm:inline-flex btn-ghost mr-2"
-          >
-            <NotePencilIcon size={24} />
-            Write
-          </button>
-          <button
-            onClick={() =>
-              navigate({
-                to: "/auth/$pathname",
-                params: { pathname: "sign-in" },
-              })
-            }
-            className="btn  btn-primary  lg:w-24"
-          >
-            Login
-          </button>
+          <SignedIn>
+            <button
+              onClick={() =>
+                navigate({
+                  to: "/editor",
+                })
+              }
+              className="btn hidden sm:inline-flex btn-ghost mr-2"
+            >
+              <NotePencilIcon size={24} />
+              Write
+            </button>
+          </SignedIn>
+
+          <SignedOut>
+            {" "}
+            <button
+              onClick={() =>
+                navigate({
+                  to: "/auth/$pathname",
+                  params: { pathname: "sign-in" },
+                })
+              }
+              className="btn  btn-primary  lg:w-24"
+            >
+              Login
+            </button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton size="icon" />
+          </SignedIn>
         </div>
       </div>
     </div>
