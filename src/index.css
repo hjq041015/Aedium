@@ -24,3 +24,8 @@
     color: var(--neon-foreground);
   }
 }
+
+.neon-auth-ui [data-sonner-toaster][data-x-position="right"][data-y-position="bottom"] {
+  display: none;
+}
+

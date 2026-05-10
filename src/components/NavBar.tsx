@@ -5,6 +5,7 @@ import {
 } from "@neondatabase/neon-js/auth/react";
 import { NotePencilIcon } from "@phosphor-icons/react";
 import { useNavigate } from "@tanstack/react-router";
+import { navigateToEditor } from "../utils/navigateHelper.ts";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -53,11 +54,7 @@ function NavBar() {
         <div className="navbar-end">
           <SignedIn>
             <button
-              onClick={() =>
-                navigate({
-                  to: "/editor",
-                })
-              }
+              onClick={() => navigateToEditor(navigate)}
               className="btn hidden sm:inline-flex btn-ghost mr-2"
             >
               <NotePencilIcon size={24} />

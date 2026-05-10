@@ -1,6 +1,7 @@
 import { SignedIn } from "@neondatabase/neon-js/auth/react";
 import { GearIcon, HouseLineIcon, NotePencilIcon } from "@phosphor-icons/react";
 import { useNavigate } from "@tanstack/react-router";
+import { navigateToEditor } from "../utils/navigateHelper.ts";
 
 function SideBar() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function SideBar() {
           <SignedIn>
             <li>
               <button
-                onClick={() => navigate({ to: "/editor" })}
+                onClick={() => navigateToEditor(navigate)}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right rounded-xl bg-(--color-secondary) text-secondary-content font-medium shadow-sm transition-all hover:-translate-y-0.5 hover:brightness-90 hover:shadow-md"
                 data-tip="Write"
               >
