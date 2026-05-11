@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { sendEmail, verifyEmailCode } from "../utils/verifyEmailHelper.ts";
 import { useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 
 function EmailVerifyForm() {
   const [resendTimer, setResendTimer] = useState(0);
@@ -8,9 +9,13 @@ function EmailVerifyForm() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    sendEmail();
-  }, []);
+  const { isLoading } = useQuery({
+    queryKey: ["send-verification-code"],
+    queryFn: () => {
+      sendEmail();
+      setResendTimer(60);
+    },
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -55,7 +60,7 @@ function EmailVerifyForm() {
             sendEmail();
             setResendTimer(60);
           }}
-          disabled={resendTimer > 0}
+          disabled={!isLoading}
           className="btn btn-secondary btn-lg mt-5 w-full"
         >
           Resend

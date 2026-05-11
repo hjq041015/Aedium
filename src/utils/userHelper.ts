@@ -1,6 +1,7 @@
+import type { User } from "@neondatabase/neon-js/auth/types";
 import { authClient } from "../auth.ts";
 
-export async function getUser() {
+export async function getUser() : Promise<User | undefined> {
     const {data,error} = await authClient.getSession();
    if  (error) {
     throw error;

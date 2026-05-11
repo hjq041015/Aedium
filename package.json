@@ -16,6 +16,7 @@
     "@neondatabase/neon-js": "0.6.0-beta",
     "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/vite": "4.2.2",
+    "@tanstack/react-query": "^5.100.9",
     "@tanstack/react-router": "^1.168.23",
     "@tanstack/react-router-devtools": "^1.166.13",
     "react": "^19.2.5",
