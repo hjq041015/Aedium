@@ -14,6 +14,7 @@ import { Route as EditorRouteImport } from './routes/editor'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth.verify-email'
 import { Route as AuthPathnameRouteImport } from './routes/auth.$pathname'
+import { Route as AccountSettingsRouteImport } from './routes/account.settings'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -40,11 +41,17 @@ const AuthPathnameRoute = AuthPathnameRouteImport.update({
   path: '/auth/$pathname',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountSettingsRoute = AccountSettingsRouteImport.update({
+  id: '/account/settings',
+  path: '/account/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/editor': typeof EditorRoute
   '/login': typeof LoginRoute
+  '/account/settings': typeof AccountSettingsRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/editor': typeof EditorRoute
   '/login': typeof LoginRoute
+  '/account/settings': typeof AccountSettingsRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
 }
@@ -60,6 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/editor': typeof EditorRoute
   '/login': typeof LoginRoute
+  '/account/settings': typeof AccountSettingsRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
 }
@@ -69,15 +78,23 @@ export interface FileRouteTypes {
     | '/'
     | '/editor'
     | '/login'
+    | '/account/settings'
     | '/auth/$pathname'
     | '/auth/verify-email'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/editor' | '/login' | '/auth/$pathname' | '/auth/verify-email'
+  to:
+    | '/'
+    | '/editor'
+    | '/login'
+    | '/account/settings'
+    | '/auth/$pathname'
+    | '/auth/verify-email'
   id:
     | '__root__'
     | '/'
     | '/editor'
     | '/login'
+    | '/account/settings'
     | '/auth/$pathname'
     | '/auth/verify-email'
   fileRoutesById: FileRoutesById
@@ -86,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EditorRoute: typeof EditorRoute
   LoginRoute: typeof LoginRoute
+  AccountSettingsRoute: typeof AccountSettingsRoute
   AuthPathnameRoute: typeof AuthPathnameRoute
   AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
 }
@@ -127,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathnameRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/settings': {
+      id: '/account/settings'
+      path: '/account/settings'
+      fullPath: '/account/settings'
+      preLoaderRoute: typeof AccountSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -134,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EditorRoute: EditorRoute,
   LoginRoute: LoginRoute,
+  AccountSettingsRoute: AccountSettingsRoute,
   AuthPathnameRoute: AuthPathnameRoute,
   AuthVerifyEmailRoute: AuthVerifyEmailRoute,
 }
