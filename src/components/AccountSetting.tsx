@@ -1,23 +1,10 @@
 import { UserAvatar } from "@neondatabase/neon-js/auth/react";
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getUser } from "../utils/userHelper.ts";
+import { useUserInfo } from "../hooks/useUserinfo.ts";
 
 function AccountSetting() {
-  const [username, setUsername] = useState("");
-
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["user"],
-    queryFn: async () => {
-      const user = await getUser();
-      if (!user) {
-        throw new Error("No user found");
-      }
-      setUsername(user.name);
-      return user;
-    },
-  });
+  const { user, isLoading, username, setUsername, handleUpdate, isPending } =
+    useUserInfo();
 
   return (
     <form className="flex items-center justify-center min-h-screen">
@@ -43,8 +30,8 @@ function AccountSetting() {
             type="text"
             className="input"
             placeholder="set your new username"
-            defaultValue={user?.name}
             value={username}
+            disabled={isPending}
             onChange={(event) => setUsername(event.target.value)}
           />
 
@@ -56,7 +43,14 @@ function AccountSetting() {
             reset password
           </Link>
 
-          <button className="btn btn-primary">Save</button>
+          <button
+            disabled={isPending}
+            onClick={handleUpdate}
+            className="btn btn-primary"
+          >
+            {isPending && <span className="loading loading-spinner"></span>}
+            {!isPending && "Update"}
+          </button>
         </fieldset>
       )}
     </form>
