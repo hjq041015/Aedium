@@ -1,33 +1,20 @@
-import { useEffect, useState } from "react";
-import { sendEmail, verifyEmailCode } from "../utils/verifyEmailHelper.ts";
 import { useNavigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import {
+  useResendCountDown,
+  useSendVerificationEmail,
+  useVerifyEmailCode,
+} from "../hooks/verificationEmail.ts";
 
 function EmailVerifyForm() {
-  const [resendTimer, setResendTimer] = useState(0);
-  const [code, setCode] = useState("");
-
   const navigate = useNavigate();
 
-  const { isLoading } = useQuery({
-    queryKey: ["send-verification-code"],
-    queryFn: () => {
-      sendEmail();
-      setResendTimer(60);
-    },
-  });
+  const { resendTimer, setResendTimer } = useResendCountDown();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setResendTimer((prev) => prev - 1);
-    }, 1000);
+  const { isPending: isSending, sendEmail } =
+    useSendVerificationEmail(setResendTimer);
 
-    if (resendTimer <= 0) {
-      clearInterval(interval);
-    }
-
-    return () => clearInterval(interval);
-  }, [resendTimer]);
+  const { code, setCode, isVerifying, verifyEmailCode } =
+    useVerifyEmailCode(navigate);
 
   return (
     <form className="flex items-center justify-center min-h-screen">
@@ -48,8 +35,9 @@ function EmailVerifyForm() {
         <button
           onClick={(event) => {
             event.preventDefault();
-            verifyEmailCode(code, navigate);
+            verifyEmailCode();
           }}
+          disabled={isVerifying}
           className="btn btn-primary btn-lg mt-5 w-full"
         >
           Verify
@@ -60,7 +48,7 @@ function EmailVerifyForm() {
             sendEmail();
             setResendTimer(60);
           }}
-          disabled={!isLoading}
+          disabled={isSending || resendTimer > 0}
           className="btn btn-secondary btn-lg mt-5 w-full"
         >
           Resend

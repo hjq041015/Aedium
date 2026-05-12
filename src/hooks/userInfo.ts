@@ -5,7 +5,7 @@ import { authClient } from "../auth.ts";
 import { toast } from "sonner";
 
 export function useUserInfo() {
-    const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("");
 
   const queryClient = useQueryClient();
 

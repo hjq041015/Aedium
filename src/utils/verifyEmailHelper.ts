@@ -3,20 +3,17 @@ import { authClient } from "../auth.ts";
 import { getUser } from "./userHelper.ts";
 import type { UseNavigateResult } from '@tanstack/react-router';
 
-let currentUser: any = null;
 
 export async function sendEmail() { 
   try {
-    if(!currentUser) {
+   
      const user = await getUser();
       if(!user) {
       throw new Error('No user found');
     }
-    currentUser = user;
-    }
-    
+
     const { error } = await authClient.sendVerificationEmail({
-      email : currentUser.email,
+      email : user.email,
       callbackURL: window.location.origin + '/',
     });
 
@@ -24,8 +21,6 @@ export async function sendEmail() {
 
     toast.success('Verification email sent',{position:'top-center', richColors: true});
 
-    
-    
   } catch (error) {
     toast.error('Error while sending verification email',{position:'top-center', richColors: true});
   }
@@ -34,15 +29,13 @@ export async function sendEmail() {
 
 export async function verifyEmailCode(code : string, navigate: UseNavigateResult<string>) {
   try {
-    if(!currentUser) {
+    
      const user = await getUser();
       if(!user) {
       throw new Error('No user found');
     }
-    currentUser = user;
-    }
     const { data, error } = await authClient.emailOtp.verifyEmail({
-      email:currentUser.email,
+      email:user.email,
       otp: code,
     });
     if (error) throw error;
