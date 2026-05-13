@@ -4,10 +4,12 @@ import {
   UserButton,
 } from "@neondatabase/neon-js/auth/react";
 import { NotePencilIcon } from "@phosphor-icons/react";
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 
 function NavBar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isEditorPage = location.pathname === "/editor";
 
   return (
     <div className="max-lg:collapse bg-base-200  shadow-sm w-full rounded-md">
@@ -52,13 +54,20 @@ function NavBar() {
         </div>
         <div className="navbar-end">
           <SignedIn>
-            <button
-              onClick={() => navigate({ to: "/editor" })}
-              className="btn hidden sm:inline-flex btn-ghost mr-2"
-            >
-              <NotePencilIcon size={24} />
-              Write
-            </button>
+            {!isEditorPage && (
+              <button
+                className="btn btn-sm hidden sm:inline-flex sm:btn-md mr-1 btn-ghost"
+                onClick={() => navigate({ to: "/editor" })}
+              >
+                <NotePencilIcon size={24} weight="thin" />
+                Write
+              </button>
+            )}
+            {isEditorPage && (
+              <button className="btn btn-accent btn-sm sm:btn-md mr-1">
+                Publish
+              </button>
+            )}
           </SignedIn>
 
           <SignedOut>
