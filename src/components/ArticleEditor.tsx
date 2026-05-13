@@ -6,6 +6,8 @@ import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
 import styles from "./ArticleEditor.module.css";
 import RootLayout from "./RootLayout";
+import RequireLogin from "./RequireLogin.tsx";
+import RequireEmailVerify from "./RequireEmailVerify.tsx";
 
 function ArticleEditor() {
   const editor = useCreateBlockNote({
@@ -21,9 +23,13 @@ function ArticleEditor() {
   });
 
   return (
-    <RootLayout>
-      <BlockNoteView className={styles.editor} editor={editor} />
-    </RootLayout>
+    <RequireLogin>
+      <RequireEmailVerify>
+        <RootLayout>
+          <BlockNoteView className={styles.editor} editor={editor} />
+        </RootLayout>
+      </RequireEmailVerify>
+    </RequireLogin>
   );
 }
 
