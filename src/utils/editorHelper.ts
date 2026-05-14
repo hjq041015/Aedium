@@ -1,6 +1,13 @@
 import type { Block } from "@blocknote/core";
 
 type BlockContent = Block["content"];
+const CONTENTLESS_BLOCK_TYPES = new Set([
+  "audio",
+  "divider",
+  "image",
+  "video",
+  "file",
+]);
 
 export function isContentEmpty(content: BlockContent | undefined) {
   if (!content) {
@@ -31,6 +38,9 @@ export function isContentEmpty(content: BlockContent | undefined) {
 
 export function isEditorEmpty(blocks: Block[]): boolean {
   return blocks.every((block) => {
+    if (CONTENTLESS_BLOCK_TYPES.has(block.type)) {
+      return false;
+    }
     return isContentEmpty(block.content) && isEditorEmpty(block.children);
   });
 }
