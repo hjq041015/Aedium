@@ -11,9 +11,13 @@ import RequireEmailVerify from "./RequireEmailVerify.tsx";
 import { useDraft } from "../hooks/draft.ts";
 import { useEffect } from "react";
 import { debounce } from "es-toolkit";
+import { isEditorEmpty } from "../utils/editorHelper.ts";
+import { useSetAtom } from "jotai";
+import { isEditorEmptyAtom } from "../atoms/editor.ts";
 
 function ArticleEditor() {
   const { draft, setDraft } = useDraft();
+  const setIsEditorEmpty = useSetAtom(isEditorEmptyAtom);
 
   const editor = useCreateBlockNote({
     autofocus: true,
@@ -21,15 +25,29 @@ function ArticleEditor() {
   });
 
   const saveDraft = debounce((document) => {
+    if (isEditorEmpty(document)) {
+      setDraft([
+        {
+          type: "paragraph",
+          content: "",
+        },
+      ]);
+      setIsEditorEmpty(true);
+      return;
+    }
     setDraft(document);
-  }, 1000);
+    setIsEditorEmpty(false);
+  }, 500);
 
   useEffect(() => {
+    if (isEditorEmpty(editor.document)) {
+      setIsEditorEmpty(true);
+    }
     return () => {
       saveDraft.flush();
       saveDraft.cancel();
     };
-  });
+  }, []);
 
   return (
     <RequireLogin>

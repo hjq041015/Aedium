@@ -5,10 +5,8 @@ import type { PartialBlock } from "@blocknote/core";
 export function useDraft() {
   const [draft, setDraft] = useLocalStorage<PartialBlock[]>(DRAFT_KEY, [
     {
-      type: "heading",
-      props: {
-        level: 1,
-      },
+      type: "paragraph",
+      content: "",
     },
   ]);
 
