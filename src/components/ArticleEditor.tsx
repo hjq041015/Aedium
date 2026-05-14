@@ -12,12 +12,14 @@ import { useDraft } from "../hooks/draft.ts";
 import { useEffect } from "react";
 import { debounce } from "es-toolkit";
 import { isEditorEmpty } from "../utils/editorHelper.ts";
-import { useSetAtom } from "jotai";
-import { isEditorEmptyAtom } from "../atoms/editor.ts";
+import { editorEmptySignalAtom, isEditorEmptyAtom } from "../atoms/editor.ts";
+import { EDITOR_DEFAULT } from "../constants/editor.ts";
+import { useAtomValue, useSetAtom } from "jotai";
 
 function ArticleEditor() {
   const { draft, setDraft } = useDraft();
   const setIsEditorEmpty = useSetAtom(isEditorEmptyAtom);
+  const isEditorEmptySignal = useAtomValue(editorEmptySignalAtom);
 
   const editor = useCreateBlockNote({
     autofocus: true,
@@ -26,12 +28,7 @@ function ArticleEditor() {
 
   const saveDraft = debounce((document) => {
     if (isEditorEmpty(document)) {
-      setDraft([
-        {
-          type: "paragraph",
-          content: "",
-        },
-      ]);
+      setDraft(EDITOR_DEFAULT);
       setIsEditorEmpty(true);
       return;
     }
@@ -40,14 +37,22 @@ function ArticleEditor() {
   }, 500);
 
   useEffect(() => {
-    if (isEditorEmpty(editor.document)) {
-      setIsEditorEmpty(true);
+    if (!isEditorEmpty(editor.document)) {
+      setIsEditorEmpty(false);
+      return;
     }
     return () => {
       saveDraft.flush();
       saveDraft.cancel();
     };
   }, []);
+
+  useEffect(() => {
+    if (isEditorEmptySignal) {
+      setDraft(EDITOR_DEFAULT);
+      editor.replaceBlocks(editor.document, EDITOR_DEFAULT);
+    }
+  }, [isEditorEmptySignal]);
 
   return (
     <RequireLogin>

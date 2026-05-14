@@ -5,14 +5,15 @@ import {
 } from "@neondatabase/neon-js/auth/react";
 import { NotePencilIcon } from "@phosphor-icons/react";
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import { useAtomValue } from "jotai";
-import { isEditorEmptyAtom } from "../atoms/editor.ts";
+import { useAtomValue, useSetAtom } from "jotai";
+import { editorEmptySignalAtom, isEditorEmptyAtom } from "../atoms/editor.ts";
 
 function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const isEditorPage = location.pathname === "/editor";
   const isEditorEmpty = useAtomValue(isEditorEmptyAtom);
+  const setEditorEmptySignal = useSetAtom(editorEmptySignalAtom);
   return (
     <div className="max-lg:collapse bg-base-200  shadow-sm w-full rounded-md">
       <input id="navbar-1-toggle" className="peer hidden" type="checkbox" />
@@ -66,12 +67,21 @@ function NavBar() {
               </button>
             )}
             {isEditorPage && (
-              <button
-                disabled={isEditorEmpty}
-                className="btn btn-accent btn-sm sm:btn-md mr-1"
-              >
-                Publish
-              </button>
+              <>
+                <button
+                  disabled={isEditorEmpty}
+                  className="btn btn-accent btn-sm sm:btn-md mr-1"
+                >
+                  Publish
+                </button>
+                <button
+                  onClick={() => setEditorEmptySignal((pre) => pre + 1)}
+                  disabled={isEditorEmpty}
+                  className="btn btn-error btn-sm sm:btn-md mr-1"
+                >
+                  Discard draft
+                </button>
+              </>
             )}
           </SignedIn>
 
