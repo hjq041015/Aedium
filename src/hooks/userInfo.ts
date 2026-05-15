@@ -3,12 +3,9 @@ import { useState } from "react";
 import { getUser } from "../utils/userHelper.ts";
 import { authClient } from "../auth.ts";
 import { toast } from "sonner";
+import type { User } from "../types/User.ts";
 
 export function useUserInfo() {
-  const [username, setUsername] = useState("");
-
-  const queryClient = useQueryClient();
-
   const { data: user, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -16,19 +13,37 @@ export function useUserInfo() {
       if (!user) {
         throw new Error("No user found");
       }
-      setUsername(user.name);
       return user;
     },
   });
 
+  return { user, isLoading };
+}
+
+export function useUserUpdate(user: User, currentAvatarFile: File | null) {
+  const [username, setUsername] = useState(user.name || "");
+
+  const queryClient = useQueryClient();
+
   const { isPending, mutate: handleUpdate } = useMutation({
-    mutationFn: async (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      if (username.trim() === "") {
+    mutationFn: async () => {
+      let newName = "";
+      let newAvatarUrl = "";
+      if (!username.length) {
         throw new Error("Username can not be empty");
       }
+
+      if (username !== user.name) {
+        newName = username;
+      }
+
+      if (!newName && !currentAvatarFile) {
+        throw new Error("No changes found");
+      }
+
       const { data, error } = await authClient.updateUser({
-        name: username,
+        name: newName,
+        ...(newAvatarUrl && { image: newAvatarUrl }),
       });
       if (error) {
         throw error;
@@ -52,5 +67,5 @@ export function useUserInfo() {
     },
   });
 
-  return { user, isLoading, username, setUsername, handleUpdate, isPending };
+  return { isPending, handleUpdate, username, setUsername };
 }

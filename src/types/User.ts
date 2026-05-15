@@ -4,7 +4,7 @@ export type User = {
   role?: null | string | undefined;
   email: string;
   image?: null | string | undefined;
-  banned: null | boolean | undefined;
+  banned?: null | boolean | undefined;
   banReason?: null | string | undefined;
   createdAt: Date;
   updatedAt: Date;
