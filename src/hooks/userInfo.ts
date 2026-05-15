@@ -24,7 +24,10 @@ export function useUserInfo() {
 export function useUserUpdate(user: User, currentAvatarFile: File | null) {
   const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_PROJECT_URL;
   const [username, setUsername] = useState(user.name || "");
-  const { isUploading, uploadAvatar } = useUploadUserAvatar(currentAvatarFile);
+  const { isUploading, uploadAvatar } = useUploadUserAvatar(
+    currentAvatarFile,
+    user.id,
+  );
 
   const queryClient = useQueryClient();
 

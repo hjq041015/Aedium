@@ -24,7 +24,10 @@ export function useChangeUserAvatar(user: User) {
   };
 }
 
-export function useUploadUserAvatar(currentAvatarFile: File | null) {
+export function useUploadUserAvatar(
+  currentAvatarFile: File | null,
+  userId: string,
+) {
   const { mutateAsync: uploadAvatar, isPending: isUploading } = useMutation({
     mutationFn: async () => {
       if (!currentAvatarFile) {
@@ -33,7 +36,7 @@ export function useUploadUserAvatar(currentAvatarFile: File | null) {
 
       const { data, error } = await supabase.storage
         .from("Aedium")
-        .upload(`${Date.now()}-${currentAvatarFile.name}`, currentAvatarFile);
+        .upload(`${Date.now()}-${userId}`, currentAvatarFile);
 
       if (error) {
         throw error;
