@@ -43,11 +43,12 @@ function SideBar() {
           <li>
             <button
               className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-              data-tip="Settings"
+              data-tip="Security Settings"
+              onClick={() => navigate({ to: "/account/security" })}
             >
               {/* Settings icon */}
               <GearIcon size={24} />
-              <span className="is-drawer-close:hidden">Settings</span>
+              <span className="is-drawer-close:hidden">Security Settings</span>
             </button>
           </li>
         </ul>
