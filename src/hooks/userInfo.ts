@@ -4,6 +4,7 @@ import { getUser } from "../utils/userHelper.ts";
 import { authClient } from "../auth.ts";
 import { toast } from "sonner";
 import type { User } from "../types/User.ts";
+import { useUploadUserAvatar } from "./userAvatar.ts";
 
 export function useUserInfo() {
   const { data: user, isLoading } = useQuery({
@@ -21,7 +22,9 @@ export function useUserInfo() {
 }
 
 export function useUserUpdate(user: User, currentAvatarFile: File | null) {
+  const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_PROJECT_URL;
   const [username, setUsername] = useState(user.name || "");
+  const { isUploading, uploadAvatar } = useUploadUserAvatar(currentAvatarFile);
 
   const queryClient = useQueryClient();
 
@@ -41,8 +44,13 @@ export function useUserUpdate(user: User, currentAvatarFile: File | null) {
         throw new Error("No changes found");
       }
 
+      if (currentAvatarFile) {
+        const updateAvatar = await uploadAvatar();
+        newAvatarUrl = `${SUPABASE_PROJECT_URL}/storage/v1/object/public/${updateAvatar.fullPath}`;
+      }
+
       const { data, error } = await authClient.updateUser({
-        name: newName,
+        ...(newName && { name: newName }),
         ...(newAvatarUrl && { image: newAvatarUrl }),
       });
       if (error) {
@@ -67,5 +75,5 @@ export function useUserUpdate(user: User, currentAvatarFile: File | null) {
     },
   });
 
-  return { isPending, handleUpdate, username, setUsername };
+  return { isPending, handleUpdate, username, setUsername, isUploading };
 }

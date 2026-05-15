@@ -8,10 +8,8 @@ function AccountSettingForm({ user }: { user: User }) {
   const { imageUrl, handleImageChange, currentAvatarFile } =
     useChangeUserAvatar(user);
 
-  const { username, setUsername, isPending, handleUpdate } = useUserUpdate(
-    user,
-    currentAvatarFile,
-  );
+  const { username, setUsername, isPending, handleUpdate, isUploading } =
+    useUserUpdate(user, currentAvatarFile);
 
   return (
     <>
@@ -64,8 +62,10 @@ function AccountSettingForm({ user }: { user: User }) {
           }}
           className="btn btn-primary"
         >
-          {isPending && <span className="loading loading-spinner"></span>}
-          {!isPending && "Update"}
+          {isPending && isUploading && (
+            <span className="loading loading-spinner"></span>
+          )}
+          {!isPending && !isUploading && "Update"}
         </button>
       </fieldset>
     </>
