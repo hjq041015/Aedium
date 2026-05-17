@@ -3,6 +3,7 @@ import type { User } from "../types/User.ts";
 import { Link } from "@tanstack/react-router";
 import { useUserUpdate } from "../hooks/userInfo.ts";
 import { useChangeUserAvatar } from "../hooks/userAvatar.ts";
+import { Route as securityRoute } from "../routes/_app/_protect/account/settings.tsx";
 
 function AccountSettingForm({ user }: { user: User }) {
   const { imageUrl, handleImageChange, currentAvatarFile } =
@@ -17,7 +18,6 @@ function AccountSettingForm({ user }: { user: User }) {
         <label htmlFor="avatar" className="mx-auto cursor-pointer">
           <Avatar avatarUrl={imageUrl} username={username} />
         </label>
-
         <input
           id="avatar"
           className="hidden"
@@ -25,7 +25,6 @@ function AccountSettingForm({ user }: { user: User }) {
           accept="image/*"
           onChange={handleImageChange}
         />
-
         <label className="label">
           Email
           {!user?.emailVerified && (
@@ -35,7 +34,6 @@ function AccountSettingForm({ user }: { user: User }) {
           )}
         </label>
         <input type="text" disabled className="input" value={user?.email} />
-
         <label className="label">Username</label>
         <input
           type="text"
@@ -45,12 +43,7 @@ function AccountSettingForm({ user }: { user: User }) {
           disabled={isPending}
           onChange={(event) => setUsername(event.target.value.trim())}
         />
-
-        <Link
-          className="link link-primary text-right"
-          to="/auth/$pathname"
-          params={{ pathname: "forgot-password" }}
-        >
+        <Link className="link link-primary text-right" to={securityRoute.to}>
           reset password
         </Link>
 
