@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { getUser } from "../utils/userHelper.ts";
-import { authClient } from "../auth.ts";
+import { authClient } from "../utils/nenoHelper.ts";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { type UseNavigateResult } from "@tanstack/react-router";
