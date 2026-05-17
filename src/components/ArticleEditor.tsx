@@ -5,8 +5,6 @@ import "@blocknote/mantine/style.css";
 
 import "@blocknote/core/fonts/inter.css";
 import styles from "./ArticleEditor.module.css";
-import RootLayout from "./RootLayout";
-import RequireLogin from "./RequireLogin.tsx";
 import RequireEmailVerify from "./RequireEmailVerify.tsx";
 import { useDraft } from "../hooks/draft.ts";
 import { useEffect } from "react";
@@ -55,17 +53,13 @@ function ArticleEditor() {
   }, [isEditorEmptySignal]);
 
   return (
-    <RequireLogin>
-      <RequireEmailVerify>
-        <RootLayout>
-          <BlockNoteView
-            onChange={() => saveDraft(editor.document)}
-            className={styles.editor}
-            editor={editor}
-          />
-        </RootLayout>
-      </RequireEmailVerify>
-    </RequireLogin>
+    <RequireEmailVerify>
+      <BlockNoteView
+        onChange={() => saveDraft(editor.document)}
+        className={styles.editor}
+        editor={editor}
+      />
+    </RequireEmailVerify>
   );
 }
 

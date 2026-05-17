@@ -1,6 +1,6 @@
 import { AuthView, SignedIn } from "@neondatabase/neon-js/auth/react";
-import { Route } from "../routes/auth.$pathname";
-import { Route as indexRoute } from "../routes/index";
+import { Route } from "../routes/auth/$pathname.tsx";
+import { Route as indexRoute } from "../routes/_app/index.tsx";
 import RediretToHome from "./RediretToHome.tsx";
 
 function Auth() {
