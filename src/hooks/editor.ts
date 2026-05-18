@@ -3,7 +3,7 @@ import { en } from "@blocknote/core/locales";
 import { useCreateBlockNote } from "@blocknote/react";
 import { isEditorEmpty } from "../utils/editorHelper.ts";
 import { EDITOR_DEFAULT } from "../constants/editor.ts";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { editorEmptySignalAtom, isEditorEmptyAtom } from "../atoms/editor.ts";
 import type { DebouncedFunction } from "es-toolkit";
 import { useEffect } from "react";
@@ -16,7 +16,7 @@ export function useEditor(
   const locale = en;
   let isRestoring = false;
   const setIsEditorEmpty = useSetAtom(isEditorEmptyAtom);
-  const isEditorEmptySignal = useAtomValue(editorEmptySignalAtom);
+  const [isEditorEmptySignal, setIsEditorEmptySignal] = useAtom(editorEmptySignalAtom);
 
   const editor = useCreateBlockNote({
     autofocus: true,
@@ -57,6 +57,7 @@ export function useEditor(
   useEffect(() => {
     if (isEditorEmptySignal) {
       resetEditor();
+      setIsEditorEmptySignal(0);
     }
   }, [isEditorEmptySignal]);
 
