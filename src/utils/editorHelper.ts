@@ -1,4 +1,5 @@
-import type { Block } from "@blocknote/core";
+import type { Block, BlockNoteEditor } from "@blocknote/core";
+import type { InsertArticle } from "../types/Article.ts";
 
 type BlockContent = Block["content"];
 const CONTENTLESS_BLOCK_TYPES = new Set([
@@ -43,4 +44,16 @@ export function isEditorEmpty(blocks: Block[]): boolean {
     }
     return isContentEmpty(block.content) && isEditorEmpty(block.children);
   });
+}
+
+export function buildArticleInsert(editor: BlockNoteEditor, userId: string): InsertArticle {
+  const [headingBlock, ...contentBlock] = editor.document;
+  const headingMarkdown = editor.blocksToMarkdownLossy([headingBlock]);
+  const title = headingMarkdown.replace("# ", "").trim();
+
+  return {
+    title,
+    content: JSON.stringify(contentBlock),
+    authorId: userId,
+  }
 }

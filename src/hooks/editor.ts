@@ -3,9 +3,10 @@ import { en } from "@blocknote/core/locales";
 import { useCreateBlockNote } from "@blocknote/react";
 import { isEditorEmpty } from "../utils/editorHelper.ts";
 import { EDITOR_DEFAULT } from "../constants/editor.ts";
-import { useSetAtom } from "jotai";
-import { isEditorEmptyAtom } from "../atoms/editor.ts";
+import { useAtomValue, useSetAtom } from "jotai";
+import { editorEmptySignalAtom, isEditorEmptyAtom } from "../atoms/editor.ts";
 import type { DebouncedFunction } from "es-toolkit";
+import { useEffect } from "react";
 
 export function useEditor(
   draft: PartialBlock[] | undefined,
@@ -15,6 +16,7 @@ export function useEditor(
   const locale = en;
   let isRestoring = false;
   const setIsEditorEmpty = useSetAtom(isEditorEmptyAtom);
+  const isEditorEmptySignal = useAtomValue(editorEmptySignalAtom);
 
   const editor = useCreateBlockNote({
     autofocus: true,
@@ -39,6 +41,25 @@ export function useEditor(
     saveDraft.cancel();
   }
 
+  // Reset editor
+  useEffect(() => {
+    if (!isEditorEmpty(editor.document)) {
+      setIsEditorEmpty(false);
+      return;
+    }
+    return () => {
+      saveDraft.flush();
+      saveDraft.cancel();
+    };
+  }, []);
+
+  // discard draft
+  useEffect(() => {
+    if (isEditorEmptySignal) {
+      resetEditor();
+    }
+  }, [isEditorEmptySignal]);
+
   function handleEditorChange(editorChange: typeof editor) {
     if (isRestoring) {
       isRestoring = false;
@@ -52,5 +73,5 @@ export function useEditor(
     saveDraft(editorChange.document);
   }
 
-  return { editor, handleEditorChange };
+  return { editor, handleEditorChange, resetEditor };
 }

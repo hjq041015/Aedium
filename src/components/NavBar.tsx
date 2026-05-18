@@ -6,7 +6,11 @@ import {
 import { NotePencilIcon } from "@phosphor-icons/react";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useAtomValue, useSetAtom } from "jotai";
-import { editorEmptySignalAtom, isEditorEmptyAtom } from "../atoms/editor.ts";
+import {
+  editorEmptySignalAtom,
+  editorPublishSignalAtom,
+  isEditorEmptyAtom,
+} from "../atoms/editor.ts";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -14,6 +18,7 @@ function NavBar() {
   const isEditorPage = location.pathname === "/editor";
   const isEditorEmpty = useAtomValue(isEditorEmptyAtom);
   const setEditorEmptySignal = useSetAtom(editorEmptySignalAtom);
+  const setEditorPublishSignal = useSetAtom(editorPublishSignalAtom);
   return (
     <div className="max-lg:collapse bg-base-200  shadow-sm w-full rounded-md">
       <input id="navbar-1-toggle" className="peer hidden" type="checkbox" />
@@ -71,6 +76,7 @@ function NavBar() {
                 <button
                   disabled={isEditorEmpty}
                   className="btn btn-accent btn-sm sm:btn-md mr-1"
+                  onClick={() => setEditorPublishSignal((pre) => pre + 1)}
                 >
                   Publish
                 </button>
