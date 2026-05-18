@@ -13,15 +13,28 @@ import { isEditorEmpty } from "../utils/editorHelper.ts";
 import { editorEmptySignalAtom, isEditorEmptyAtom } from "../atoms/editor.ts";
 import { EDITOR_DEFAULT } from "../constants/editor.ts";
 import { useAtomValue, useSetAtom } from "jotai";
+import { en } from "@blocknote/core/locales";
 
 function ArticleEditor() {
   const { draft, setDraft } = useDraft();
   const setIsEditorEmpty = useSetAtom(isEditorEmptyAtom);
   const isEditorEmptySignal = useAtomValue(editorEmptySignalAtom);
+  const locale = en;
 
   const editor = useCreateBlockNote({
     autofocus: true,
     initialContent: draft,
+
+    dictionary: {
+      ...locale,
+      placeholders: {
+        ...locale.placeholders,
+        // We override the default placeholder
+        default: "Tell your story",
+        // We override the heading placeholder
+        heading: "Your title of story",
+      },
+    },
   });
 
   const saveDraft = debounce((document) => {
@@ -52,10 +65,18 @@ function ArticleEditor() {
     }
   }, [isEditorEmptySignal]);
 
+  function handleEditorChange(editorChange: typeof editor) {
+    if (isEditorEmpty(editorChange.document)) {
+      setDraft(EDITOR_DEFAULT);
+      setIsEditorEmpty(true);
+    }
+    saveDraft(editorChange.document);
+  }
+
   return (
     <RequireEmailVerify>
       <BlockNoteView
-        onChange={() => saveDraft(editor.document)}
+        onChange={handleEditorChange}
         className={styles.editor}
         editor={editor}
       />
