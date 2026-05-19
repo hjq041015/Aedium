@@ -1,9 +1,9 @@
-import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
 import { useQuery } from "@tanstack/react-query";
 import { Route as ArticleRoute } from "../routes/_app/article.$articleId.tsx";
 import { getArticleById } from "../services/apiArticle.ts";
 import Loading from "./Loading.tsx";
+import ArticleEditorView from "./ArticleEditorView.tsx";
 
 function ArticleDetails() {
   const editor = useCreateBlockNote();
@@ -22,8 +22,10 @@ function ArticleDetails() {
 
   return (
     <>
-      <h1 className="text-center text-7xl font-serif">{article?.title}</h1>
-      <BlockNoteView editor={editor} editable={false} />
+      <h1 className="text-center text-7xl mb-8 mt-8 font-serif">
+        {article?.title}
+      </h1>
+      <ArticleEditorView editor={editor} editable={false} />
     </>
   );
 }

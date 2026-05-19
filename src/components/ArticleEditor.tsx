@@ -1,9 +1,3 @@
-import { BlockNoteView } from "@blocknote/mantine";
-
-import "@blocknote/mantine/style.css";
-
-import "@blocknote/core/fonts/inter.css";
-import styles from "./ArticleEditor.module.css";
 import RequireEmailVerify from "./RequireEmailVerify.tsx";
 import { useDraft } from "../hooks/draft.ts";
 import { useEditor } from "../hooks/editor.ts";
@@ -14,6 +8,7 @@ import { editorPublishSignalAtom } from "../atoms/editor.ts";
 import { userAtom } from "../atoms/user.ts";
 import { usePublishArticle } from "../hooks/article.ts";
 import { toast } from "sonner";
+import ArticleEditorView from "./ArticleEditorView.tsx";
 
 function ArticleEditor() {
   const { draft, setDraft, saveDraft } = useDraft();
@@ -50,11 +45,7 @@ function ArticleEditor() {
 
   return (
     <RequireEmailVerify>
-      <BlockNoteView
-        onChange={handleEditorChange}
-        className={styles.editor}
-        editor={editor}
-      />
+      <ArticleEditorView editor={editor} onChange={handleEditorChange} />
     </RequireEmailVerify>
   );
 }
