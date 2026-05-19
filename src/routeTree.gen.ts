@@ -14,6 +14,7 @@ import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AuthPathnameRouteImport } from './routes/auth/$pathname'
 import { Route as AppProtectRouteRouteImport } from './routes/_app/_protect/route'
+import { Route as AppArticleArticleIdRouteImport } from './routes/_app/article.$articleId'
 import { Route as AppProtectEditorRouteImport } from './routes/_app/_protect/editor'
 import { Route as AppProtectAccountSettingsRouteImport } from './routes/_app/_protect/account/settings'
 import { Route as AppProtectAccountSecurityRouteImport } from './routes/_app/_protect/account/security'
@@ -41,6 +42,11 @@ const AppProtectRouteRoute = AppProtectRouteRouteImport.update({
   id: '/_protect',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppArticleArticleIdRoute = AppArticleArticleIdRouteImport.update({
+  id: '/article/$articleId',
+  path: '/article/$articleId',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppProtectEditorRoute = AppProtectEditorRouteImport.update({
   id: '/editor',
   path: '/editor',
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/auth/$pathname': typeof AuthPathnameRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/editor': typeof AppProtectEditorRoute
+  '/article/$articleId': typeof AppArticleArticleIdRoute
   '/account/security': typeof AppProtectAccountSecurityRoute
   '/account/settings': typeof AppProtectAccountSettingsRoute
 }
@@ -72,6 +79,7 @@ export interface FileRoutesByTo {
   '/auth/$pathname': typeof AuthPathnameRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/editor': typeof AppProtectEditorRoute
+  '/article/$articleId': typeof AppArticleArticleIdRoute
   '/account/security': typeof AppProtectAccountSecurityRoute
   '/account/settings': typeof AppProtectAccountSettingsRoute
 }
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/_app/': typeof AppIndexRoute
   '/_app/_protect/editor': typeof AppProtectEditorRoute
+  '/_app/article/$articleId': typeof AppArticleArticleIdRoute
   '/_app/_protect/account/security': typeof AppProtectAccountSecurityRoute
   '/_app/_protect/account/settings': typeof AppProtectAccountSettingsRoute
 }
@@ -93,6 +102,7 @@ export interface FileRouteTypes {
     | '/auth/$pathname'
     | '/auth/verify-email'
     | '/editor'
+    | '/article/$articleId'
     | '/account/security'
     | '/account/settings'
   fileRoutesByTo: FileRoutesByTo
@@ -101,6 +111,7 @@ export interface FileRouteTypes {
     | '/auth/$pathname'
     | '/auth/verify-email'
     | '/editor'
+    | '/article/$articleId'
     | '/account/security'
     | '/account/settings'
   id:
@@ -111,6 +122,7 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/_app/'
     | '/_app/_protect/editor'
+    | '/_app/article/$articleId'
     | '/_app/_protect/account/security'
     | '/_app/_protect/account/settings'
   fileRoutesById: FileRoutesById
@@ -158,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProtectRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/article/$articleId': {
+      id: '/_app/article/$articleId'
+      path: '/article/$articleId'
+      fullPath: '/article/$articleId'
+      preLoaderRoute: typeof AppArticleArticleIdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/_protect/editor': {
       id: '/_app/_protect/editor'
       path: '/editor'
@@ -201,11 +220,13 @@ const AppProtectRouteRouteWithChildren = AppProtectRouteRoute._addFileChildren(
 interface AppRouteRouteChildren {
   AppProtectRouteRoute: typeof AppProtectRouteRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
+  AppArticleArticleIdRoute: typeof AppArticleArticleIdRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppProtectRouteRoute: AppProtectRouteRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
+  AppArticleArticleIdRoute: AppArticleArticleIdRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

@@ -1,5 +1,6 @@
 import { HeartIcon } from "@phosphor-icons/react";
 import type { Article } from "../types/Article.ts";
+import { Link } from "@tanstack/react-router";
 
 function ArticleListItem({ article }: { article: Article }) {
   function getArticleBrief(content: string, maxLength = 100) {
@@ -47,7 +48,7 @@ function ArticleListItem({ article }: { article: Article }) {
   }
 
   return (
-    <>
+    <Link to="/article/$articleId" params={{ articleId: `${article.id}` }}>
       <li className="list-row">
         <div>
           <img
@@ -72,7 +73,7 @@ function ArticleListItem({ article }: { article: Article }) {
           </div>
         </button>
       </li>
-    </>
+    </Link>
   );
 }
 export default ArticleListItem;

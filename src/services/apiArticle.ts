@@ -9,8 +9,16 @@ export async function getArticles() {
   if (error) {
     throw error;
   }
-  console.log(data);
   return data;
+}
+
+export async function getArticleById(articleId: Number) {
+  const { data, error } = await client.from(TABLE_NAME).select("*").eq("id", articleId);
+
+  if (error) {
+    throw error;
+  }
+  return data[0];
 }
 
 export async function InsertArticle(insertArcile: InsertArticle) {
