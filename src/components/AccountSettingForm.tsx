@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { useUserUpdate } from "../hooks/userInfo.ts";
 import { useChangeUserAvatar } from "../hooks/userAvatar.ts";
 import { Route as securityRoute } from "../routes/_app/_protect/account/settings.tsx";
+import Loading from "./Loading.tsx";
 
 function AccountSettingForm({ user }: { user: User }) {
   const { imageUrl, handleImageChange, currentAvatarFile } =
@@ -55,9 +56,7 @@ function AccountSettingForm({ user }: { user: User }) {
           }}
           className="btn btn-primary"
         >
-          {isPending && isUploading && (
-            <span className="loading loading-spinner"></span>
-          )}
+          {isPending && isUploading && <Loading />}
           {!isPending && !isUploading && "Update"}
         </button>
       </fieldset>

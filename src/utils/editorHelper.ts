@@ -54,6 +54,6 @@ export function buildArticleInsert(editor: BlockNoteEditor, userId: string): Ins
   return {
     title,
     content: JSON.stringify(contentBlock),
-    authorId: userId,
+    author_id: userId,
   }
 }

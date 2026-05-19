@@ -16,11 +16,7 @@ export async function getArticles() {
 export async function InsertArticle(insertArcile: InsertArticle) {
   const { data, error } = await client
     .from(TABLE_NAME)
-    .insert({
-      title: insertArcile.title,
-      content: insertArcile.content,
-      author_id: insertArcile.authorId
-    })
+    .insert(insertArcile)
     .select();
 
   if (error) {
