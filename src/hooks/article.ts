@@ -1,6 +1,6 @@
 import type { User } from "@neondatabase/neon-js/auth/types";
-import { useMutation } from "@tanstack/react-query";
-import { InsertArticle } from "@/services/apiArticle.ts";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getArticleById, InsertArticle } from "@/services/apiArticle.ts";
 import { buildArticleInsert } from "@/utils/editorHelper.ts";
 import type { BlockNoteEditor } from "@blocknote/core";
 import { toast } from "sonner";
@@ -23,4 +23,16 @@ export function usePublishArticle(user: User | null, editor: BlockNoteEditor) {
     });
 
     return { handlePublish };
+}
+
+export function useCurrentArticle(articleId: string) {
+    const { data: article, isLoading } = useQuery({
+        queryKey: ["article", articleId],
+        queryFn: async () => {
+            const article = await getArticleById(Number(articleId));
+            return article;
+        },
+    });
+
+    return { article, isLoading };
 }

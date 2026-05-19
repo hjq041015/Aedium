@@ -1,28 +1,27 @@
 import { useCreateBlockNote } from "@blocknote/react";
-import { useQuery } from "@tanstack/react-query";
 import ArticleEditorView from "@/components/ArticleEditorView.tsx";
 import Loading from "@/components/Loading.tsx";
 import { Route as ArticleRoute } from "@/routes/_app/article.$articleId.tsx";
-import { getArticleById } from "@/services/apiArticle.ts";
 import {
   BookmarksIcon,
   NotePencilIcon,
   ThumbsUpIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
+import { useCurrentArticle } from "@/hooks/article.ts";
+import { Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 function ArticleDetails() {
   const editor = useCreateBlockNote();
   const { articleId } = ArticleRoute.useParams();
+  const { article, isLoading } = useCurrentArticle(articleId);
 
-  const { data: article, isLoading } = useQuery({
-    queryKey: ["article", articleId],
-    queryFn: async () => {
-      const article = await getArticleById(Number(articleId));
+  useEffect(() => {
+    if (article) {
       editor.replaceBlocks(editor.document, JSON.parse(article.content));
-      return article;
-    },
-  });
+    }
+  }, [article]);
 
   if (isLoading) return <Loading />;
 
@@ -46,9 +45,14 @@ function ArticleDetails() {
             </a>
           </li>
           <li>
-            <a className="tooltip" data-tip="Edit">
+            <Link
+              to="/article/editor/$articleId"
+              params={article.id}
+              className="tooltip"
+              data-tip="Edit"
+            >
               <NotePencilIcon size={24} />
-            </a>
+            </Link>
           </li>
           <li>
             <a className="tooltip" data-tip="Delete">

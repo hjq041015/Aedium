@@ -18,6 +18,7 @@ import { Route as AppArticleArticleIdRouteImport } from './routes/_app/article.$
 import { Route as AppProtectEditorRouteImport } from './routes/_app/_protect/editor'
 import { Route as AppProtectAccountSettingsRouteImport } from './routes/_app/_protect/account/settings'
 import { Route as AppProtectAccountSecurityRouteImport } from './routes/_app/_protect/account/security'
+import { Route as AppProtectArticleEditorArticleIdRouteImport } from './routes/_app/_protect/article.editor.$articleId'
 
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
@@ -64,6 +65,12 @@ const AppProtectAccountSecurityRoute =
     path: '/account/security',
     getParentRoute: () => AppProtectRouteRoute,
   } as any)
+const AppProtectArticleEditorArticleIdRoute =
+  AppProtectArticleEditorArticleIdRouteImport.update({
+    id: '/article/editor/$articleId',
+    path: '/article/editor/$articleId',
+    getParentRoute: () => AppProtectRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/article/$articleId': typeof AppArticleArticleIdRoute
   '/account/security': typeof AppProtectAccountSecurityRoute
   '/account/settings': typeof AppProtectAccountSettingsRoute
+  '/article/editor/$articleId': typeof AppProtectArticleEditorArticleIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
   '/article/$articleId': typeof AppArticleArticleIdRoute
   '/account/security': typeof AppProtectAccountSecurityRoute
   '/account/settings': typeof AppProtectAccountSettingsRoute
+  '/article/editor/$articleId': typeof AppProtectArticleEditorArticleIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,6 +103,7 @@ export interface FileRoutesById {
   '/_app/article/$articleId': typeof AppArticleArticleIdRoute
   '/_app/_protect/account/security': typeof AppProtectAccountSecurityRoute
   '/_app/_protect/account/settings': typeof AppProtectAccountSettingsRoute
+  '/_app/_protect/article/editor/$articleId': typeof AppProtectArticleEditorArticleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/article/$articleId'
     | '/account/security'
     | '/account/settings'
+    | '/article/editor/$articleId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/article/$articleId'
     | '/account/security'
     | '/account/settings'
+    | '/article/editor/$articleId'
   id:
     | '__root__'
     | '/_app'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
     | '/_app/article/$articleId'
     | '/_app/_protect/account/security'
     | '/_app/_protect/account/settings'
+    | '/_app/_protect/article/editor/$articleId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProtectAccountSecurityRouteImport
       parentRoute: typeof AppProtectRouteRoute
     }
+    '/_app/_protect/article/editor/$articleId': {
+      id: '/_app/_protect/article/editor/$articleId'
+      path: '/article/editor/$articleId'
+      fullPath: '/article/editor/$articleId'
+      preLoaderRoute: typeof AppProtectArticleEditorArticleIdRouteImport
+      parentRoute: typeof AppProtectRouteRoute
+    }
   }
 }
 
@@ -205,12 +225,14 @@ interface AppProtectRouteRouteChildren {
   AppProtectEditorRoute: typeof AppProtectEditorRoute
   AppProtectAccountSecurityRoute: typeof AppProtectAccountSecurityRoute
   AppProtectAccountSettingsRoute: typeof AppProtectAccountSettingsRoute
+  AppProtectArticleEditorArticleIdRoute: typeof AppProtectArticleEditorArticleIdRoute
 }
 
 const AppProtectRouteRouteChildren: AppProtectRouteRouteChildren = {
   AppProtectEditorRoute: AppProtectEditorRoute,
   AppProtectAccountSecurityRoute: AppProtectAccountSecurityRoute,
   AppProtectAccountSettingsRoute: AppProtectAccountSettingsRoute,
+  AppProtectArticleEditorArticleIdRoute: AppProtectArticleEditorArticleIdRoute,
 }
 
 const AppProtectRouteRouteWithChildren = AppProtectRouteRoute._addFileChildren(

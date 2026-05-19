@@ -1,5 +1,4 @@
 import ArticleEditorView from "@/components/ArticleEditorView.tsx";
-import RequireEmailVerify from "@/components/RequireEmailVerify.tsx";
 import { editorPublishSignalAtom } from "@/atoms/editor.ts";
 import { userAtom } from "@/atoms/user.ts";
 import { usePublishArticle } from "@/hooks/article.ts";
@@ -43,11 +42,7 @@ function ArticleEditor() {
     }
   }, [editorPublishSignal]);
 
-  return (
-    <RequireEmailVerify>
-      <ArticleEditorView editor={editor} onChange={handleEditorChange} />
-    </RequireEmailVerify>
-  );
+  return <ArticleEditorView editor={editor} onChange={handleEditorChange} />;
 }
 
 export default ArticleEditor;

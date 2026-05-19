@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import RequireLogin from "@/components/RequireLogin.tsx";
+import RequireEmailVerify from "@/components/RequireEmailVerify.tsx";
 
 export const Route = createFileRoute("/_app/_protect")({
   component: RouteComponent,
@@ -8,7 +9,9 @@ export const Route = createFileRoute("/_app/_protect")({
 function RouteComponent() {
   return (
     <RequireLogin>
-      <Outlet />
+      <RequireEmailVerify>
+        <Outlet />
+      </RequireEmailVerify>
     </RequireLogin>
   );
 }

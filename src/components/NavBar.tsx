@@ -11,11 +11,16 @@ import {
   editorPublishSignalAtom,
   isEditorEmptyAtom,
 } from "@/atoms/editor.ts";
+import { Route as ArticleUpdateRoute } from "@/routes/_app/_protect/article.editor.$articleId.tsx";
+import { Route as EditorRoute } from "@/routes/_app/_protect/editor.tsx";
 
 function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const isEditorPage = location.pathname === "/editor";
+  const isEditorPage = location.pathname === EditorRoute.to;
+  const isUpdatePage = location.pathname.includes(
+    ArticleUpdateRoute.to.split("$")[0],
+  );
   const isEditorEmpty = useAtomValue(isEditorEmptyAtom);
   const setEditorEmptySignal = useSetAtom(editorEmptySignalAtom);
   const setEditorPublishSignal = useSetAtom(editorPublishSignalAtom);
@@ -62,7 +67,7 @@ function NavBar() {
         </div>
         <div className="navbar-end">
           <SignedIn>
-            {!isEditorPage && (
+            {!isEditorPage && !isUpdatePage && (
               <button
                 className="btn btn-sm hidden sm:inline-flex sm:btn-md mr-1 btn-ghost"
                 onClick={() => navigate({ to: "/editor" })}
@@ -86,6 +91,13 @@ function NavBar() {
                   className="btn btn-error btn-sm sm:btn-md mr-1"
                 >
                   Discard draft
+                </button>
+              </>
+            )}
+            {isUpdatePage && (
+              <>
+                <button className="btn btn-accent btn-sm sm:btn-md mr-1">
+                  Update
                 </button>
               </>
             )}
