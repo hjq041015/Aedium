@@ -1,10 +1,10 @@
 import type { PartialBlock } from "@blocknote/core";
 import { en } from "@blocknote/core/locales";
 import { useCreateBlockNote } from "@blocknote/react";
-import { isEditorEmpty } from "../utils/editorHelper.ts";
-import { EDITOR_DEFAULT } from "../constants/editor.ts";
+import { editorEmptySignalAtom, isEditorEmptyAtom } from "@/atoms/editor.ts";
+import { EDITOR_DEFAULT } from "@/constants/editor.ts";
+import { isEditorEmpty } from "@/utils/editorHelper.ts";
 import { useAtom, useSetAtom } from "jotai";
-import { editorEmptySignalAtom, isEditorEmptyAtom } from "../atoms/editor.ts";
 import type { DebouncedFunction } from "es-toolkit";
 import { useEffect } from "react";
 

@@ -1,5 +1,5 @@
-import type { InsertArticle } from "../types/Article.ts";
-import { client } from "../utils/nenoHelper.ts";
+import type { InsertArticle } from "@/types/Article.ts";
+import { client } from "@/utils/nenoHelper.ts";
 
 const TABLE_NAME = "article";
 

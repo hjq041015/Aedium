@@ -3,9 +3,9 @@ import {
   useResendCountDown,
   useSendVerificationEmail,
   useVerifyEmailCode,
-} from "../hooks/verificationEmail.ts";
-import RequireLogin from "./RequireLogin.tsx";
-import RequireEmailNotVerify from "./RequireEmailNotVerify.tsx";
+} from "@/hooks/verificationEmail.ts";
+import RequireEmailNotVerify from "@/components/RequireEmailNotVerify.tsx";
+import RequireLogin from "@/components/RequireLogin.tsx";
 
 function EmailVerifyForm() {
   const navigate = useNavigate();

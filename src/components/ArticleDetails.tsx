@@ -1,9 +1,9 @@
 import { useCreateBlockNote } from "@blocknote/react";
 import { useQuery } from "@tanstack/react-query";
-import { Route as ArticleRoute } from "../routes/_app/article.$articleId.tsx";
-import { getArticleById } from "../services/apiArticle.ts";
-import Loading from "./Loading.tsx";
-import ArticleEditorView from "./ArticleEditorView.tsx";
+import ArticleEditorView from "@/components/ArticleEditorView.tsx";
+import Loading from "@/components/Loading.tsx";
+import { Route as ArticleRoute } from "@/routes/_app/article.$articleId.tsx";
+import { getArticleById } from "@/services/apiArticle.ts";
 
 function ArticleDetails() {
   const editor = useCreateBlockNote();

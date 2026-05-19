@@ -1,5 +1,5 @@
 import type { Block, BlockNoteEditor } from "@blocknote/core";
-import type { InsertArticle } from "../types/Article.ts";
+import type { InsertArticle } from "@/types/Article.ts";
 
 type BlockContent = Block["content"];
 const CONTENTLESS_BLOCK_TYPES = new Set([

@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { getUser } from "../utils/userHelper.ts";
+import { useUploadUserAvatar } from "@/hooks/userAvatar.ts";
+import type { User } from "@/types/User.ts";
+import { authClient } from "@/utils/nenoHelper.ts";
+import { getUser } from "@/utils/userHelper.ts";
 
 import { toast } from "sonner";
-import type { User } from "../types/User.ts";
-import { useUploadUserAvatar } from "./userAvatar.ts";
-import { authClient } from "../utils/nenoHelper.ts";
 
 export function useUserInfo() {
   const { data: user, isLoading } = useQuery({

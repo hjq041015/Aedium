@@ -1,10 +1,10 @@
-import Avatar from "./Avatar.tsx";
-import type { User } from "../types/User.ts";
+import Avatar from "@/components/Avatar.tsx";
+import Loading from "@/components/Loading.tsx";
+import { useChangeUserAvatar } from "@/hooks/userAvatar.ts";
+import { useUserUpdate } from "@/hooks/userInfo.ts";
+import { Route as securityRoute } from "@/routes/_app/_protect/account/security.tsx";
+import type { User } from "@/types/User.ts";
 import { Link } from "@tanstack/react-router";
-import { useUserUpdate } from "../hooks/userInfo.ts";
-import { useChangeUserAvatar } from "../hooks/userAvatar.ts";
-import { Route as securityRoute } from "../routes/_app/_protect/account/settings.tsx";
-import Loading from "./Loading.tsx";
 
 function AccountSettingForm({ user }: { user: User }) {
   const { imageUrl, handleImageChange, currentAvatarFile } =

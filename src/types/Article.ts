@@ -1,4 +1,4 @@
-import type { Tables, TablesInsert } from "./database.ts";
+import type { Tables, TablesInsert } from "@/types/database.ts";
 
 export type InsertArticle = TablesInsert<'article'>
 

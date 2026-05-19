@@ -1,5 +1,5 @@
-import { useUserInfo } from "../hooks/userInfo.ts";
-import AccountSettingForm from "./AccountSettingForm.tsx";
+import AccountSettingForm from "@/components/AccountSettingForm.tsx";
+import { useUserInfo } from "@/hooks/userInfo.ts";
 
 function AccountSetting() {
   const { user, isLoading } = useUserInfo();

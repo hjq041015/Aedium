@@ -1,7 +1,7 @@
 import type { User } from "@neondatabase/neon-js/auth/types";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { supabase } from "../utils/supabaseHelper.ts";
+import { supabase } from "@/utils/supabaseHelper.ts";
 import { toast } from "sonner";
 
 export function useChangeUserAvatar(user: User) {

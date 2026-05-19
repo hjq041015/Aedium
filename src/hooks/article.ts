@@ -1,7 +1,7 @@
 import type { User } from "@neondatabase/neon-js/auth/types";
 import { useMutation } from "@tanstack/react-query";
-import { buildArticleInsert } from "../utils/editorHelper.ts";
-import { InsertArticle } from "../services/apiArticle.ts";
+import { InsertArticle } from "@/services/apiArticle.ts";
+import { buildArticleInsert } from "@/utils/editorHelper.ts";
 import type { BlockNoteEditor } from "@blocknote/core";
 import { toast } from "sonner";
 

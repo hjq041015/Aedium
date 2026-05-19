@@ -10,7 +10,7 @@ import {
   editorEmptySignalAtom,
   editorPublishSignalAtom,
   isEditorEmptyAtom,
-} from "../atoms/editor.ts";
+} from "@/atoms/editor.ts";
 
 function NavBar() {
   const navigate = useNavigate();

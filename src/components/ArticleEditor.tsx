@@ -1,14 +1,14 @@
-import RequireEmailVerify from "./RequireEmailVerify.tsx";
-import { useDraft } from "../hooks/draft.ts";
-import { useEditor } from "../hooks/editor.ts";
+import ArticleEditorView from "@/components/ArticleEditorView.tsx";
+import RequireEmailVerify from "@/components/RequireEmailVerify.tsx";
+import { editorPublishSignalAtom } from "@/atoms/editor.ts";
+import { userAtom } from "@/atoms/user.ts";
+import { usePublishArticle } from "@/hooks/article.ts";
+import { useDraft } from "@/hooks/draft.ts";
+import { useEditor } from "@/hooks/editor.ts";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect } from "react";
-import { isEditorEmpty } from "../utils/editorHelper.ts";
-import { editorPublishSignalAtom } from "../atoms/editor.ts";
-import { userAtom } from "../atoms/user.ts";
-import { usePublishArticle } from "../hooks/article.ts";
+import { isEditorEmpty } from "@/utils/editorHelper.ts";
 import { toast } from "sonner";
-import ArticleEditorView from "./ArticleEditorView.tsx";
 
 function ArticleEditor() {
   const { draft, setDraft, saveDraft } = useDraft();

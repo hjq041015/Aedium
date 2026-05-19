@@ -1,5 +1,5 @@
-import NavBar from "./NavBar.tsx";
-import SideBar from "./SideBar.tsx";
+import NavBar from "@/components/NavBar.tsx";
+import SideBar from "@/components/SideBar.tsx";
 
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
