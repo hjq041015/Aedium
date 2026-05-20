@@ -5,3 +5,5 @@ export const isEditorEmptyAtom = atom(true);
 export const editorEmptySignalAtom = atom(0);
 
 export const editorPublishSignalAtom = atom(0);
+
+export const editorUpdateSignalAtom = atom(0);

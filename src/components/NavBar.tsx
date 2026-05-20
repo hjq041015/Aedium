@@ -9,6 +9,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import {
   editorEmptySignalAtom,
   editorPublishSignalAtom,
+  editorUpdateSignalAtom,
   isEditorEmptyAtom,
 } from "@/atoms/editor.ts";
 import { Route as ArticleUpdateRoute } from "@/routes/_app/_protect/article.editor.$articleId.tsx";
@@ -24,6 +25,8 @@ function NavBar() {
   const isEditorEmpty = useAtomValue(isEditorEmptyAtom);
   const setEditorEmptySignal = useSetAtom(editorEmptySignalAtom);
   const setEditorPublishSignal = useSetAtom(editorPublishSignalAtom);
+  const setEditorUpdateSignal = useSetAtom(editorUpdateSignalAtom);
+
   return (
     <div className="max-lg:collapse bg-base-200  shadow-sm w-full rounded-md">
       <input id="navbar-1-toggle" className="peer hidden" type="checkbox" />
@@ -96,7 +99,10 @@ function NavBar() {
             )}
             {isUpdatePage && (
               <>
-                <button className="btn btn-accent btn-sm sm:btn-md mr-1">
+                <button
+                  onClick={() => setEditorUpdateSignal((pre) => pre + 1)}
+                  className="btn btn-accent btn-sm sm:btn-md mr-1"
+                >
                   Update
                 </button>
               </>

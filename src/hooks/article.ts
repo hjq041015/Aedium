@@ -1,9 +1,10 @@
 import type { User } from "@neondatabase/neon-js/auth/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getArticleById, InsertArticle } from "@/services/apiArticle.ts";
+import { getArticleById, InsertArticle, UpdateArticle as UpdateArticleApi } from "@/services/apiArticle.ts";
 import { buildArticleInsert } from "@/utils/editorHelper.ts";
 import type { BlockNoteEditor } from "@blocknote/core";
 import { toast } from "sonner";
+
 
 export function usePublishArticle(user: User | null, editor: BlockNoteEditor) {
     const { mutateAsync: handlePublish } = useMutation({
@@ -35,4 +36,27 @@ export function useCurrentArticle(articleId: string) {
     });
 
     return { article, isLoading };
+}
+
+export function useUpdateArticle() {
+
+    const { mutateAsync: handleUpdate } = useMutation({
+        mutationFn: async ({ articleId, editor }: { articleId: string, editor: BlockNoteEditor }) => {
+            const updateArticle = buildArticleInsert(editor, articleId);
+            await UpdateArticleApi({
+                title: updateArticle.title,
+                content: updateArticle.content,
+                update_at: new Date().toISOString()
+            }, Number(articleId));
+        },
+        onError: () => {
+            toast.error("Error while updating article", {
+                position: "top-center",
+                richColors: true,
+            });
+        }
+    })
+
+    return { handleUpdate };
+
 }
