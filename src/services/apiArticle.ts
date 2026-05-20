@@ -48,4 +48,15 @@ export async function UpdateArticle(updateArticle: UpdateArticle, articleId: Num
   return data;
 }
 
+export async function deleteArticleById(articleId: number) {
+  const { error } = await client
+    .from(TABLE_NAME)
+    .delete()
+    .eq('id', articleId);
+
+  if (error) {
+    throw error;
+  }
+}
+
 

@@ -8,14 +8,16 @@ import {
   ThumbsUpIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
-import { useCurrentArticle } from "@/hooks/article.ts";
-import { Link } from "@tanstack/react-router";
+import { useCurrentArticle, useDeleteArticle } from "@/hooks/article.ts";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 function ArticleDetails() {
   const editor = useCreateBlockNote();
   const { articleId } = ArticleRoute.useParams();
   const { article, isLoading } = useCurrentArticle(articleId);
+  const { handleDelete, isDeleteing } = useDeleteArticle();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (article) {
@@ -55,9 +57,21 @@ function ArticleDetails() {
             </Link>
           </li>
           <li>
-            <a className="tooltip" data-tip="Delete">
+            <button
+              onClick={() =>
+                handleDelete(
+                  { articleId: articleId },
+                  {
+                    onSuccess: () => navigate({ to: "/" }),
+                  },
+                )
+              }
+              disabled={isDeleteing}
+              className="tooltip"
+              data-tip="Delete"
+            >
               <TrashIcon size={24} />
-            </a>
+            </button>
           </li>
         </ul>
       </div>

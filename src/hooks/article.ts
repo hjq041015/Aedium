@@ -1,6 +1,6 @@
 import type { User } from "@neondatabase/neon-js/auth/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getArticleById, InsertArticle, UpdateArticle as UpdateArticleApi } from "@/services/apiArticle.ts";
+import { deleteArticleById, getArticleById, InsertArticle, UpdateArticle as UpdateArticleApi } from "@/services/apiArticle.ts";
 import { buildArticleInsert } from "@/utils/editorHelper.ts";
 import type { BlockNoteEditor } from "@blocknote/core";
 import { toast } from "sonner";
@@ -54,9 +54,39 @@ export function useUpdateArticle() {
                 position: "top-center",
                 richColors: true,
             });
+
+        },
+        onSuccess: () => {
+            toast.success("Article updated successfully", {
+                position: "top-center",
+                richColors: true,
+            });
         }
     })
 
     return { handleUpdate };
 
+}
+
+
+export function useDeleteArticle() {
+    const { mutate: handleDelete, isPending: isDeleteing } = useMutation({
+        mutationFn: async ({ articleId }: { articleId: string }) => {
+            await deleteArticleById(Number(articleId));
+        },
+        onError: () => {
+            toast.error("Error while deleting article", {
+                position: "top-center",
+                richColors: true,
+            });
+        },
+        onSuccess: () => {
+            toast.success("Article deleted successfully", {
+                position: "top-center",
+                richColors: true,
+            });
+        }
+    })
+
+    return { handleDelete, isDeleteing };
 }
