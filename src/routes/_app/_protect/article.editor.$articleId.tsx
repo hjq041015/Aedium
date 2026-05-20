@@ -1,4 +1,4 @@
-import ArticleUpdate from "@/components/ArticleUpdate.tsx";
+import ArticleUpdate from "@/features/article/ArticleUpdate";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute(

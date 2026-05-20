@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import ArticleListItem from "@/components/ArticleListItem.tsx";
-import Loading from "@/components/Loading.tsx";
+import ArticleListItem from "@/features/article/ArticleListItem";
+import Loading from "@/ui/Loading";
 import { getArticles } from "@/services/apiArticle.ts";
 
 function ArticleList() {

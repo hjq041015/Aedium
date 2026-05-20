@@ -1,5 +1,5 @@
-import Avatar from "@/components/Avatar.tsx";
-import Loading from "@/components/Loading.tsx";
+import Avatar from "@/ui/Avatar";
+import Loading from "@/ui/Loading";
 import { useChangeUserAvatar } from "@/hooks/userAvatar.ts";
 import { useUserUpdate } from "@/hooks/userInfo.ts";
 import { Route as securityRoute } from "@/routes/_app/_protect/account/security.tsx";

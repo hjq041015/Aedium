@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import RootLayout from "@/components/RootLayout.tsx";
+import RootLayout from "@/ui/RootLayout";
 import { userAtom } from "@/atoms/user.ts";
 import { useUserInfo } from "@/hooks/userInfo.ts";
 import { useSetAtom } from "jotai";

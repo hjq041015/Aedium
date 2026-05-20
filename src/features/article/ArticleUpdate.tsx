@@ -1,6 +1,6 @@
 import { editorUpdateSignalAtom } from "@/atoms/editor.ts";
-import ArticleEditorView from "@/components/ArticleEditorView.tsx";
-import Loading from "@/components/Loading.tsx";
+import ArticleEditorView from "@/features/article/ArticleEditorView";
+import Loading from "@/ui/Loading";
 import { useCurrentArticle, useUpdateArticle } from "@/hooks/article.ts";
 import { Route as ArticleEditorRoute } from "@/routes/_app/_protect/article.editor.$articleId.tsx";
 import { isEditorEmpty } from "@/utils/editorHelper.ts";

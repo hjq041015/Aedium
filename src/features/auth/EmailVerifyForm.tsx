@@ -4,8 +4,8 @@ import {
   useSendVerificationEmail,
   useVerifyEmailCode,
 } from "@/hooks/verificationEmail.ts";
-import RequireEmailNotVerify from "@/components/RequireEmailNotVerify.tsx";
-import RequireLogin from "@/components/RequireLogin.tsx";
+import RequireEmailNotVerify from "@/ui/RequireEmailNotVerify";
+import RequireLogin from "@/ui/RequireLogin";
 
 function EmailVerifyForm() {
   const navigate = useNavigate();

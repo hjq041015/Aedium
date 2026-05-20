@@ -1,4 +1,4 @@
-import AccountSettingForm from "@/components/AccountSettingForm.tsx";
+import AccountSettingForm from "@/features/account/AccountSettingForm";
 import { useUserInfo } from "@/hooks/userInfo.ts";
 
 function AccountSetting() {

@@ -1,6 +1,6 @@
 import { useCreateBlockNote } from "@blocknote/react";
-import ArticleEditorView from "@/components/ArticleEditorView.tsx";
-import Loading from "@/components/Loading.tsx";
+import ArticleEditorView from "@/features/article/ArticleEditorView";
+import Loading from "@/ui/Loading";
 import { Route as ArticleRoute } from "@/routes/_app/article.$articleId.tsx";
 import {
   BookmarksIcon,

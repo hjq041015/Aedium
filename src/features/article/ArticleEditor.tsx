@@ -1,4 +1,4 @@
-import ArticleEditorView from "@/components/ArticleEditorView.tsx";
+import ArticleEditorView from "@/features/article/ArticleEditorView";
 import { editorPublishSignalAtom } from "@/atoms/editor.ts";
 import { userAtom } from "@/atoms/user.ts";
 import { usePublishArticle } from "@/hooks/article.ts";
