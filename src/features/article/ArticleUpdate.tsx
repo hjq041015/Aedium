@@ -3,11 +3,11 @@ import ArticleEditorView from "@/features/article/ArticleEditorView";
 import Loading from "@/ui/Loading";
 import { useCurrentArticle, useUpdateArticle } from "@/hooks/article.ts";
 import { Route as ArticleEditorRoute } from "@/routes/_app/_protect/article.editor.$articleId.tsx";
-import { isEditorEmpty } from "@/utils/editorHelper.ts";
+import { buildArticleInsert, isEditorEmpty } from "@/utils/editorHelper.ts";
 import { useCreateBlockNote } from "@blocknote/react";
-import { useNavigate } from "@tanstack/react-router";
+import { useBlocker, useNavigate } from "@tanstack/react-router";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function ArticleUpdate() {
   const navigate = useNavigate();
@@ -18,6 +18,21 @@ function ArticleUpdate() {
     editorUpdateSignalAtom,
   );
   const { handleUpdate } = useUpdateArticle();
+  const initalArticle = useRef<null | string>(null);
+  const [drity, setdrity] = useState(false);
+
+  function handleEditorChange() {
+    if (!article && !initalArticle.current) {
+      return;
+    }
+
+    const currentArticleData = buildArticleInsert(editor, articleId);
+    const currentArticle = JSON.stringify({
+      title: currentArticleData.title,
+      content: currentArticleData.content,
+    });
+    setdrity(initalArticle.current !== currentArticle);
+  }
 
   useEffect(() => {
     if (!isLoading && editorUpdateSignal && !isEditorEmpty(editor.document)) {
@@ -38,12 +53,32 @@ function ArticleUpdate() {
       { type: "heading", content: article.title, level: 1 },
       ...JSON.parse(article.content),
     ]);
-  }, [article]);
+    if (!isLoading && article) {
+      initalArticle.current = JSON.stringify({
+        title: article.title,
+        content: article.content,
+      });
+    }
+  }, [article, isLoading]);
+
+  useBlocker({
+    shouldBlockFn: () => {
+      if (!drity) {
+        return false;
+      }
+      const shouldBlock = !window.confirm(
+        "You have unsaved changes. Are you sure you want to leave?",
+      );
+
+      return shouldBlock;
+    },
+  });
 
   if (isLoading) {
     return <Loading />;
   }
 
-  return <ArticleEditorView editor={editor} />;
+  return <ArticleEditorView editor={editor} onChange={handleEditorChange} />;
 }
+
 export default ArticleUpdate;
