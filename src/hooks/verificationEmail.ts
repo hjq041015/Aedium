@@ -64,11 +64,10 @@ export function useResendCountDown() {
 }
 
 export function useVerifyEmailCode(navigate: UseNavigateResult<string>) {
-  const [code, setCode] = useState("");
 
   const { mutate: verifyEmailCode, isPending: isVerifying } = useMutation({
     mutationKey: ["verify-email-code"],
-    mutationFn: async () => {
+    mutationFn: async ({ code }: { code: string }) => {
       if (!code.trim().length) {
         throw new Error("Code is required");
       }
@@ -111,5 +110,5 @@ export function useVerifyEmailCode(navigate: UseNavigateResult<string>) {
     },
   });
 
-  return { code, setCode, verifyEmailCode, isVerifying };
+  return { verifyEmailCode, isVerifying };
 }
