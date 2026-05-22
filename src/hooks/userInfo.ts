@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { useUploadUserAvatar } from "@/hooks/userAvatar.ts";
 import type { User } from "@/types/User.ts";
 import { authClient } from "@/utils/nenoHelper.ts";
@@ -24,7 +23,7 @@ export function useUserInfo() {
 
 export function useUserUpdate(user: User, currentAvatarFile: File | null) {
   const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_PROJECT_URL;
-  const [username, setUsername] = useState(user.name || "");
+
   const { isUploading, uploadAvatar } = useUploadUserAvatar(
     currentAvatarFile,
     user.id,
@@ -33,7 +32,7 @@ export function useUserUpdate(user: User, currentAvatarFile: File | null) {
   const queryClient = useQueryClient();
 
   const { isPending, mutate: handleUpdate } = useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({ username }: { username: string }) => {
       let newName = "";
       let newAvatarUrl = "";
       if (!username.length) {
@@ -79,5 +78,5 @@ export function useUserUpdate(user: User, currentAvatarFile: File | null) {
     },
   });
 
-  return { isPending, handleUpdate, username, setUsername, isUploading };
+  return { isPending, handleUpdate, isUploading };
 }
