@@ -7,7 +7,7 @@ import { buildArticleInsert, isEditorEmpty } from "@/utils/editorHelper.ts";
 import { useCreateBlockNote } from "@blocknote/react";
 import { useBlocker, useNavigate } from "@tanstack/react-router";
 import { useAtom } from "jotai";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 function ArticleUpdate() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function ArticleUpdate() {
   );
   const { handleUpdate } = useUpdateArticle();
   const initalArticle = useRef<null | string>(null);
-  const [drity, setdrity] = useState(false);
+  const dirty = useRef(false);
 
   function handleEditorChange() {
     if (!article && !initalArticle.current) {
@@ -31,7 +31,7 @@ function ArticleUpdate() {
       title: currentArticleData.title,
       content: currentArticleData.content,
     });
-    setdrity(initalArticle.current !== currentArticle);
+    dirty.current = currentArticle !== initalArticle.current;
   }
 
   useEffect(() => {
@@ -41,6 +41,7 @@ function ArticleUpdate() {
         {
           onSuccess: () => {
             setEditorUpdateSignal(0);
+            dirty.current = false;
             navigate({ to: "/article/$articleId", params: { articleId } });
           },
         },
@@ -63,7 +64,7 @@ function ArticleUpdate() {
 
   useBlocker({
     shouldBlockFn: () => {
-      if (!drity) {
+      if (!dirty.current) {
         return false;
       }
       const shouldBlock = !window.confirm(
