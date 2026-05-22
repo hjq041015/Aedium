@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import ArticleListItem from "@/features/article/ArticleListItem";
+import ArticleListItem from "@/features/home/ArticleListItem";
 import Loading from "@/ui/Loading";
 import { getArticles } from "@/services/apiArticle.ts";
 
