@@ -7,7 +7,7 @@ import type { User } from "@/types/User.ts";
 import { Link } from "@tanstack/react-router";
 import { useForm, useStore } from "@tanstack/react-form";
 import { FieldInfo } from "@/ui/FieldInfo.tsx";
-import * as z from "zod";
+import { profileUpdateSchema } from "@/schemas/UserProfileUpdarte";
 
 function AccountSettingForm({ user }: { user: User }) {
   const { imageUrl, handleImageChange, currentAvatarFile } =
@@ -18,16 +18,9 @@ function AccountSettingForm({ user }: { user: User }) {
     currentAvatarFile,
   );
 
-  const userSchema = z.object({
-    username: z
-      .string()
-      .trim()
-      .min(2, "Username must be at least 2 characters"),
-  });
-
   const form = useForm({
     validators: {
-      onSubmit: userSchema,
+      onBlur: profileUpdateSchema,
     },
     defaultValues: {
       username: user.name || "",

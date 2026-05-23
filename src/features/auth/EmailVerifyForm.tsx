@@ -7,8 +7,9 @@ import {
 import RequireEmailNotVerify from "@/ui/RequireEmailNotVerify";
 import RequireLogin from "@/ui/RequireLogin";
 import { useForm } from "@tanstack/react-form";
-import * as z from "zod";
+
 import { FieldInfo } from "@/ui/FieldInfo.tsx";
+import { verifyEmailSchema } from "@/schemas/VerifyEmail.ts";
 
 function EmailVerifyForm() {
   const navigate = useNavigate();
@@ -18,33 +19,33 @@ function EmailVerifyForm() {
   const { isPending: isSending, sendEmail } =
     useSendVerificationEmail(setResendTimer);
 
-  const { isVerifying, verifyEmailCode } = useVerifyEmailCode(navigate);
-
-  const codeSchema = z.object({
-    code: z
-      .string()
-      .trim()
-      .length(6, "Code must be 6 digits")
-      .refine((code) => {
-        for (const char of code) {
-          if (char >= "0" && char <= "9") {
-            continue;
-          }
-          return false;
-        }
-        return false;
-      }, "Code must be a number"),
-  });
+  const { isVerifying, verifyEmailCode } = useVerifyEmailCode();
 
   const form = useForm({
     defaultValues: {
       code: "",
     },
     onSubmit: ({ value: { code } }) => {
-      verifyEmailCode({ code });
+      verifyEmailCode(
+        { code },
+        {
+          onSuccess: (data) => {
+            if (data?.user) {
+              navigate({ to: "/" });
+            } else {
+              navigate({
+                to: "/auth/$pathname",
+                params: {
+                  pathname: "sign-in",
+                },
+              });
+            }
+          },
+        },
+      );
     },
     validators: {
-      onBlur: codeSchema,
+      onBlur: verifyEmailSchema,
     },
   });
 

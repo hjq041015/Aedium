@@ -5,6 +5,7 @@ import { authClient } from "@/utils/nenoHelper.ts";
 import { getUser } from "@/utils/userHelper.ts";
 
 import { toast } from "sonner";
+import type { profileUpdate } from "@/schemas/UserProfileUpdarte";
 
 export function useUserInfo() {
   const { data: user, isLoading } = useQuery({
@@ -32,12 +33,10 @@ export function useUserUpdate(user: User, currentAvatarFile: File | null) {
   const queryClient = useQueryClient();
 
   const { isPending, mutate: handleUpdate } = useMutation({
-    mutationFn: async ({ username }: { username: string }) => {
+    mutationFn: async ({ username }: profileUpdate) => {
       let newName = "";
       let newAvatarUrl = "";
-      if (!username.length) {
-        throw new Error("Username can not be empty");
-      }
+
 
       if (username !== user.name) {
         newName = username;

@@ -3,7 +3,7 @@ import { authClient } from "@/utils/nenoHelper.ts";
 import { getUser } from "@/utils/userHelper.ts";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { type UseNavigateResult } from "@tanstack/react-router";
+import type { veriftyEmail } from "@/schemas/VerifyEmail.ts";
 
 export function useSendVerificationEmail(
   setResendTimer: (ReresendTimer: number) => void,
@@ -63,11 +63,11 @@ export function useResendCountDown() {
   return { resendTimer, setResendTimer };
 }
 
-export function useVerifyEmailCode(navigate: UseNavigateResult<string>) {
+export function useVerifyEmailCode() {
 
   const { mutate: verifyEmailCode, isPending: isVerifying } = useMutation({
     mutationKey: ["verify-email-code"],
-    mutationFn: async ({ code }: { code: string }) => {
+    mutationFn: async ({ code }: veriftyEmail) => {
       if (!code.trim().length) {
         throw new Error("Code is required");
       }
@@ -86,21 +86,11 @@ export function useVerifyEmailCode(navigate: UseNavigateResult<string>) {
       return data;
     },
 
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Email verified successfully", {
         position: "top-center",
         richColors: true,
       });
-      if (data?.user) {
-        navigate({ to: "/" });
-      } else {
-        navigate({
-          to: "/auth/$pathname",
-          params: {
-            pathname: "sign-in",
-          },
-        });
-      }
     },
     onError: () => {
       toast.error("Error while verifying email", {
