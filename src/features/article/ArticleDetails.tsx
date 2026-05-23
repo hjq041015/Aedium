@@ -7,6 +7,7 @@ import ArticleEditorView from '@/features/article/ArticleEditorView';
 import { useCurrentArticle, useDeleteArticle } from '@/hooks/article.ts';
 import { Route as ArticleRoute } from '@/routes/_app/article.$articleId.tsx';
 import Loading from '@/ui/Loading';
+import UserCurrent from '@/ui/UserCurrent.tsx';
 
 function ArticleDetails() {
   const editor = useCreateBlockNote();
@@ -40,7 +41,8 @@ function ArticleDetails() {
               <BookmarksIcon size={24} />
             </a>
           </li>
-          <li>
+         <UserCurrent article={article}>
+           <li>
             <Link
               to="/article/editor/$articleId"
               params={article.id}
@@ -50,6 +52,8 @@ function ArticleDetails() {
               <NotePencilIcon size={24} />
             </Link>
           </li>
+         </UserCurrent>
+          <UserCurrent article={article}>
           <li>
             <button
               onClick={() =>
@@ -67,6 +71,8 @@ function ArticleDetails() {
               <TrashIcon size={24} />
             </button>
           </li>
+          </UserCurrent>
+          
         </ul>
       </div>
       <div className="divider"></div>
