@@ -1,10 +1,9 @@
-import { type BlockNoteEditor } from "@blocknote/core";
-import { BlockNoteView } from "@blocknote/mantine";
+import { type BlockNoteEditor } from '@blocknote/core';
+import { BlockNoteView } from '@blocknote/mantine';
 
-import styles from "./ArticleEditor.module.css";
-import "@blocknote/mantine/style.css";
-
-import "@blocknote/core/fonts/inter.css";
+import styles from './ArticleEditor.module.css';
+import '@blocknote/mantine/style.css';
+import '@blocknote/core/fonts/inter.css';
 
 function ArticleEditorView({
   editor,

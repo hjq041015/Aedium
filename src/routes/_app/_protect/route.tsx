@@ -1,8 +1,9 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import RequireLogin from "@/ui/RequireLogin";
-import RequireEmailVerify from "@/ui/RequireEmailVerify";
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/_app/_protect")({
+import RequireEmailVerify from '@/ui/RequireEmailVerify';
+import RequireLogin from '@/ui/RequireLogin';
+
+export const Route = createFileRoute('/_app/_protect')({
   component: RouteComponent,
 });
 

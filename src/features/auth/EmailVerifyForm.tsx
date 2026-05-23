@@ -1,29 +1,28 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useForm } from '@tanstack/react-form';
+import { useNavigate } from '@tanstack/react-router';
+
 import {
   useResendCountDown,
   useSendVerificationEmail,
   useVerifyEmailCode,
-} from "@/hooks/verificationEmail.ts";
-import RequireEmailNotVerify from "@/ui/RequireEmailNotVerify";
-import RequireLogin from "@/ui/RequireLogin";
-import { useForm } from "@tanstack/react-form";
-
-import { FieldInfo } from "@/ui/FieldInfo.tsx";
-import { verifyEmailSchema } from "@/schemas/VerifyEmail.ts";
+} from '@/hooks/verificationEmail.ts';
+import { verifyEmailSchema } from '@/schemas/VerifyEmail.ts';
+import { FieldInfo } from '@/ui/FieldInfo.tsx';
+import RequireEmailNotVerify from '@/ui/RequireEmailNotVerify';
+import RequireLogin from '@/ui/RequireLogin';
 
 function EmailVerifyForm() {
   const navigate = useNavigate();
 
   const { resendTimer, setResendTimer } = useResendCountDown();
 
-  const { isPending: isSending, sendEmail } =
-    useSendVerificationEmail(setResendTimer);
+  const { isPending: isSending, sendEmail } = useSendVerificationEmail(setResendTimer);
 
   const { isVerifying, verifyEmailCode } = useVerifyEmailCode();
 
   const form = useForm({
     defaultValues: {
-      code: "",
+      code: '',
     },
     onSubmit: ({ value: { code } }) => {
       verifyEmailCode(
@@ -31,12 +30,12 @@ function EmailVerifyForm() {
         {
           onSuccess: (data) => {
             if (data?.user) {
-              navigate({ to: "/" });
+              navigate({ to: '/' });
             } else {
               navigate({
-                to: "/auth/$pathname",
+                to: '/auth/$pathname',
                 params: {
-                  pathname: "sign-in",
+                  pathname: 'sign-in',
                 },
               });
             }
@@ -86,10 +85,7 @@ function EmailVerifyForm() {
               )}
             />
 
-            <button
-              disabled={isVerifying}
-              className="btn btn-primary btn-lg mt-5 w-full"
-            >
+            <button disabled={isVerifying} className="btn btn-primary btn-lg mt-5 w-full">
               Verify
             </button>
 

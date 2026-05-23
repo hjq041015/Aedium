@@ -1,10 +1,11 @@
-import type { InsertArticle, UpdateArticle } from "@/types/Article.ts";
-import { client } from "@/utils/nenoHelper.ts";
+import type { InsertArticle, UpdateArticle } from '@/types/Article.ts';
 
-const TABLE_NAME = "article";
+import { client } from '@/utils/nenoHelper.ts';
+
+const TABLE_NAME = 'article';
 
 export async function getArticles() {
-  const { data, error } = await client.from(TABLE_NAME).select("*");
+  const { data, error } = await client.from(TABLE_NAME).select('*');
 
   if (error) {
     throw error;
@@ -13,7 +14,7 @@ export async function getArticles() {
 }
 
 export async function getArticleById(articleId: Number) {
-  const { data, error } = await client.from(TABLE_NAME).select("*").eq("id", articleId);
+  const { data, error } = await client.from(TABLE_NAME).select('*').eq('id', articleId);
 
   if (error) {
     throw error;
@@ -22,10 +23,7 @@ export async function getArticleById(articleId: Number) {
 }
 
 export async function InsertArticle(insertArcile: InsertArticle) {
-  const { data, error } = await client
-    .from(TABLE_NAME)
-    .insert(insertArcile)
-    .select();
+  const { data, error } = await client.from(TABLE_NAME).insert(insertArcile).select();
 
   if (error) {
     throw error;
@@ -38,7 +36,7 @@ export async function UpdateArticle(updateArticle: UpdateArticle, articleId: Num
   const { data, error } = await client
     .from(TABLE_NAME)
     .update(updateArticle)
-    .eq("id", articleId)
+    .eq('id', articleId)
     .select();
 
   if (error) {
@@ -49,14 +47,9 @@ export async function UpdateArticle(updateArticle: UpdateArticle, articleId: Num
 }
 
 export async function deleteArticleById(articleId: number) {
-  const { error } = await client
-    .from(TABLE_NAME)
-    .delete()
-    .eq('id', articleId);
+  const { error } = await client.from(TABLE_NAME).delete().eq('id', articleId);
 
   if (error) {
     throw error;
   }
 }
-
-

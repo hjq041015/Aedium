@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import AccountSecurity from "@/features/account/AccountSecurity";
+import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/_app/_protect/account/security")({
+import AccountSecurity from '@/features/account/AccountSecurity';
+
+export const Route = createFileRoute('/_app/_protect/account/security')({
   component: AccountSecurity,
 });

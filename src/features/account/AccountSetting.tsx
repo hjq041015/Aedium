@@ -1,5 +1,5 @@
-import AccountSettingForm from "@/features/account/AccountSettingForm";
-import { useUserInfo } from "@/hooks/userInfo.ts";
+import AccountSettingForm from '@/features/account/AccountSettingForm';
+import { useUserInfo } from '@/hooks/userInfo.ts';
 
 function AccountSetting() {
   const { user, isLoading } = useUserInfo();

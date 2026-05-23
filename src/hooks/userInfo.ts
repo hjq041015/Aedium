@@ -1,19 +1,20 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useUploadUserAvatar } from "@/hooks/userAvatar.ts";
-import type { User } from "@/types/User.ts";
-import { authClient } from "@/utils/nenoHelper.ts";
-import { getUser } from "@/utils/userHelper.ts";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
-import { toast } from "sonner";
-import type { profileUpdate } from "@/schemas/UserProfileUpdarte";
+import type { profileUpdate } from '@/schemas/UserProfileUpdarte';
+import type { User } from '@/types/User.ts';
+
+import { useUploadUserAvatar } from '@/hooks/userAvatar.ts';
+import { authClient } from '@/utils/nenoHelper.ts';
+import { getUser } from '@/utils/userHelper.ts';
 
 export function useUserInfo() {
   const { data: user, isLoading } = useQuery({
-    queryKey: ["user"],
+    queryKey: ['user'],
     queryFn: async () => {
       const user = await getUser();
       if (!user) {
-        throw new Error("No user found");
+        throw new Error('No user found');
       }
       return user;
     },
@@ -25,25 +26,21 @@ export function useUserInfo() {
 export function useUserUpdate(user: User, currentAvatarFile: File | null) {
   const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_PROJECT_URL;
 
-  const { isUploading, uploadAvatar } = useUploadUserAvatar(
-    currentAvatarFile,
-    user.id,
-  );
+  const { isUploading, uploadAvatar } = useUploadUserAvatar(currentAvatarFile, user.id);
 
   const queryClient = useQueryClient();
 
   const { isPending, mutate: handleUpdate } = useMutation({
     mutationFn: async ({ username }: profileUpdate) => {
-      let newName = "";
-      let newAvatarUrl = "";
-
+      let newName = '';
+      let newAvatarUrl = '';
 
       if (username !== user.name) {
         newName = username;
       }
 
       if (!newName && !currentAvatarFile) {
-        throw new Error("No changes found");
+        throw new Error('No changes found');
       }
 
       if (currentAvatarFile) {
@@ -62,16 +59,16 @@ export function useUserUpdate(user: User, currentAvatarFile: File | null) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["user"],
+        queryKey: ['user'],
       });
-      toast.success("Username updated successfully", {
-        position: "top-center",
+      toast.success('Username updated successfully', {
+        position: 'top-center',
         richColors: true,
       });
     },
     onError: (error) => {
       toast.error(error.message, {
-        position: "top-center",
+        position: 'top-center',
         richColors: true,
       });
     },

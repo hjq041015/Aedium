@@ -1,11 +1,13 @@
-import type { User } from "@neondatabase/neon-js/auth/types";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { supabase } from "@/utils/supabaseHelper.ts";
-import { toast } from "sonner";
+import type { User } from '@neondatabase/neon-js/auth/types';
+
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { toast } from 'sonner';
+
+import { supabase } from '@/utils/supabaseHelper.ts';
 
 export function useChangeUserAvatar(user: User) {
-  const [imageUrl, setImageUrl] = useState(user?.image || "");
+  const [imageUrl, setImageUrl] = useState(user?.image || '');
   const [currentAvatarFile, setCurrentAvatarFile] = useState<File | null>(null);
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -24,18 +26,15 @@ export function useChangeUserAvatar(user: User) {
   };
 }
 
-export function useUploadUserAvatar(
-  currentAvatarFile: File | null,
-  userId: string,
-) {
+export function useUploadUserAvatar(currentAvatarFile: File | null, userId: string) {
   const { mutateAsync: uploadAvatar, isPending: isUploading } = useMutation({
     mutationFn: async () => {
       if (!currentAvatarFile) {
-        throw new Error("No file selected");
+        throw new Error('No file selected');
       }
 
       const { data, error } = await supabase.storage
-        .from("Aedium")
+        .from('Aedium')
         .upload(`${Date.now()}-${userId}`, currentAvatarFile);
 
       if (error) {
@@ -45,14 +44,14 @@ export function useUploadUserAvatar(
       return data;
     },
     onSuccess: () => {
-      toast.success("Avatar updated successfully", {
-        position: "top-center",
+      toast.success('Avatar updated successfully', {
+        position: 'top-center',
         richColors: true,
       });
     },
     onError: () => {
-      toast.error("Error while updating avatar", {
-        position: "top-center",
+      toast.error('Error while updating avatar', {
+        position: 'top-center',
         richColors: true,
       });
     },

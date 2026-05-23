@@ -1,16 +1,12 @@
-import { useCreateBlockNote } from "@blocknote/react";
-import ArticleEditorView from "@/features/article/ArticleEditorView";
-import Loading from "@/ui/Loading";
-import { Route as ArticleRoute } from "@/routes/_app/article.$articleId.tsx";
-import {
-  BookmarksIcon,
-  NotePencilIcon,
-  ThumbsUpIcon,
-  TrashIcon,
-} from "@phosphor-icons/react";
-import { useCurrentArticle, useDeleteArticle } from "@/hooks/article.ts";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useCreateBlockNote } from '@blocknote/react';
+import { BookmarksIcon, NotePencilIcon, ThumbsUpIcon, TrashIcon } from '@phosphor-icons/react';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
+
+import ArticleEditorView from '@/features/article/ArticleEditorView';
+import { useCurrentArticle, useDeleteArticle } from '@/hooks/article.ts';
+import { Route as ArticleRoute } from '@/routes/_app/article.$articleId.tsx';
+import Loading from '@/ui/Loading';
 
 function ArticleDetails() {
   const editor = useCreateBlockNote();
@@ -29,9 +25,7 @@ function ArticleDetails() {
 
   return (
     <>
-      <h1 className="text-center text-7xl mb-8 mt-8 font-serif">
-        {article?.title}
-      </h1>
+      <h1 className="text-center text-7xl mb-8 mt-8 font-serif">{article?.title}</h1>
 
       <div className="divider"></div>
       <div className="flex justify-center">
@@ -62,7 +56,7 @@ function ArticleDetails() {
                 handleDelete(
                   { articleId: articleId },
                   {
-                    onSuccess: () => navigate({ to: "/" }),
+                    onSuccess: () => navigate({ to: '/' }),
                   },
                 )
               }

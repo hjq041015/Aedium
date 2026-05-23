@@ -1,9 +1,7 @@
-import type { Tables, TablesInsert, TablesUpdate } from "@/types/database.ts";
+import type { Tables, TablesInsert, TablesUpdate } from '@/types/database.ts';
 
-export type InsertArticle = TablesInsert<'article'>
+export type InsertArticle = TablesInsert<'article'>;
 
-export type UpdateArticle = TablesUpdate<'article'>
+export type UpdateArticle = TablesUpdate<'article'>;
 
-export type Article = Tables<'article'>
-
-
+export type Article = Tables<'article'>;

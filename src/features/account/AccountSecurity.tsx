@@ -1,4 +1,4 @@
-import { SecuritySettingsCards } from "@neondatabase/neon-js/auth/react";
+import { SecuritySettingsCards } from '@neondatabase/neon-js/auth/react';
 
 function AccountSecurity() {
   return (

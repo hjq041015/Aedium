@@ -1,5 +1,6 @@
-import type { User } from "@neondatabase/neon-js/auth/types";
-import { authClient } from "@/utils/nenoHelper.ts";
+import type { User } from '@neondatabase/neon-js/auth/types';
+
+import { authClient } from '@/utils/nenoHelper.ts';
 
 export async function getUser(): Promise<User | undefined> {
   const { data, error } = await authClient.getSession();

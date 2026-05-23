@@ -1,11 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import ArticleListItem from "@/features/home/ArticleListItem";
-import Loading from "@/ui/Loading";
-import { getArticles } from "@/services/apiArticle.ts";
+import { useQuery } from '@tanstack/react-query';
+
+import ArticleListItem from '@/features/home/ArticleListItem';
+import { getArticles } from '@/services/apiArticle.ts';
+import Loading from '@/ui/Loading';
 
 function ArticleList() {
   const { data: articles, isLoading } = useQuery({
-    queryKey: ["get-article"],
+    queryKey: ['get-article'],
     queryFn: getArticles,
   });
   if (isLoading) {

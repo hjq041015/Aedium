@@ -1,10 +1,11 @@
-import { NeonAuthUIProvider } from "@neondatabase/neon-js/auth/react";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { authClient } from "@/utils/nenoHelper.ts";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { DevTools } from "jotai-devtools";
-import "jotai-devtools/styles.css";
+import { NeonAuthUIProvider } from '@neondatabase/neon-js/auth/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { DevTools } from 'jotai-devtools';
+
+import { authClient } from '@/utils/nenoHelper.ts';
+import 'jotai-devtools/styles.css';
 
 const queryClient = new QueryClient();
 const RootLayout = () => (

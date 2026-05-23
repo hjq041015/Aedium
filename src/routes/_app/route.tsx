@@ -1,11 +1,12 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import RootLayout from "@/ui/RootLayout";
-import { userAtom } from "@/atoms/user.ts";
-import { useUserInfo } from "@/hooks/userInfo.ts";
-import { useSetAtom } from "jotai";
-import { useEffect } from "react";
+import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 
-export const Route = createFileRoute("/_app")({
+import { userAtom } from '@/atoms/user.ts';
+import { useUserInfo } from '@/hooks/userInfo.ts';
+import RootLayout from '@/ui/RootLayout';
+
+export const Route = createFileRoute('/_app')({
   component: RouteComponent,
 });
 

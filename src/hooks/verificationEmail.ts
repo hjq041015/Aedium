@@ -1,24 +1,24 @@
-import { useMutation } from "@tanstack/react-query";
-import { authClient } from "@/utils/nenoHelper.ts";
-import { getUser } from "@/utils/userHelper.ts";
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import type { veriftyEmail } from "@/schemas/VerifyEmail.ts";
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
-export function useSendVerificationEmail(
-  setResendTimer: (ReresendTimer: number) => void,
-) {
+import type { veriftyEmail } from '@/schemas/VerifyEmail.ts';
+
+import { authClient } from '@/utils/nenoHelper.ts';
+import { getUser } from '@/utils/userHelper.ts';
+
+export function useSendVerificationEmail(setResendTimer: (ReresendTimer: number) => void) {
   const { isPending, mutate: sendEmail } = useMutation({
-    mutationKey: ["send-verification-code"],
+    mutationKey: ['send-verification-code'],
     mutationFn: async () => {
       const user = await getUser();
       if (!user) {
-        throw new Error("No user found");
+        throw new Error('No user found');
       }
 
       const { error } = await authClient.sendVerificationEmail({
         email: user.email,
-        callbackURL: window.location.origin + "/",
+        callbackURL: window.location.origin + '/',
       });
 
       if (error) throw error;
@@ -26,14 +26,14 @@ export function useSendVerificationEmail(
       setResendTimer(60);
     },
     onSuccess: () => {
-      toast.success("Verification email sent", {
-        position: "top-center",
+      toast.success('Verification email sent', {
+        position: 'top-center',
         richColors: true,
       });
     },
     onError: () => {
-      toast.error("Error while sending verification email", {
-        position: "top-center",
+      toast.error('Error while sending verification email', {
+        position: 'top-center',
         richColors: true,
       });
     },
@@ -64,17 +64,16 @@ export function useResendCountDown() {
 }
 
 export function useVerifyEmailCode() {
-
   const { mutate: verifyEmailCode, isPending: isVerifying } = useMutation({
-    mutationKey: ["verify-email-code"],
+    mutationKey: ['verify-email-code'],
     mutationFn: async ({ code }: veriftyEmail) => {
       if (!code.trim().length) {
-        throw new Error("Code is required");
+        throw new Error('Code is required');
       }
 
       const user = await getUser();
       if (!user) {
-        throw new Error("No user found");
+        throw new Error('No user found');
       }
       const { data, error } = await authClient.emailOtp.verifyEmail({
         email: user.email,
@@ -87,14 +86,14 @@ export function useVerifyEmailCode() {
     },
 
     onSuccess: () => {
-      toast.success("Email verified successfully", {
-        position: "top-center",
+      toast.success('Email verified successfully', {
+        position: 'top-center',
         richColors: true,
       });
     },
     onError: () => {
-      toast.error("Error while verifying email", {
-        position: "top-center",
+      toast.error('Error while verifying email', {
+        position: 'top-center',
         richColors: true,
       });
     },

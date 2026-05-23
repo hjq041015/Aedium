@@ -1,30 +1,30 @@
-import { defineConfig } from "vite";
-import { fileURLToPath, URL } from "node:url";
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
-import babel from "@rolldown/plugin-babel";
-import tailwindcss from "@tailwindcss/vite";
-import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import { VitePWA } from 'vite-plugin-pwa'
+import babel from '@rolldown/plugin-babel';
+import tailwindcss from '@tailwindcss/vite';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
+import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vite.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   plugins: [
     tanstackRouter({
-      target: "react",
+      target: 'react',
       autoCodeSplitting: true,
     }),
     react(),
-    babel({ presets: [reactCompilerPreset(), "jotai-babel/preset"] }),
+    babel({ presets: [reactCompilerPreset(), 'jotai-babel/preset'] }),
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
-        enabled: true
+        enabled: true,
       },
       manifest: {
         name: 'Aedium',
@@ -44,6 +44,6 @@ export default defineConfig({
           },
         ],
       },
-    })
+    }),
   ],
 });

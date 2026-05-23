@@ -1,12 +1,14 @@
-import type { PartialBlock } from "@blocknote/core";
-import { en } from "@blocknote/core/locales";
-import { useCreateBlockNote } from "@blocknote/react";
-import { editorEmptySignalAtom, isEditorEmptyAtom } from "@/atoms/editor.ts";
-import { EDITOR_DEFAULT } from "@/constants/editor.ts";
-import { isEditorEmpty } from "@/utils/editorHelper.ts";
-import { useAtom, useSetAtom } from "jotai";
-import type { DebouncedFunction } from "es-toolkit";
-import { useEffect } from "react";
+import type { PartialBlock } from '@blocknote/core';
+import type { DebouncedFunction } from 'es-toolkit';
+
+import { en } from '@blocknote/core/locales';
+import { useCreateBlockNote } from '@blocknote/react';
+import { useAtom, useSetAtom } from 'jotai';
+import { useEffect } from 'react';
+
+import { editorEmptySignalAtom, isEditorEmptyAtom } from '@/atoms/editor.ts';
+import { EDITOR_DEFAULT } from '@/constants/editor.ts';
+import { isEditorEmpty } from '@/utils/editorHelper.ts';
 
 export function useEditor(
   draft: PartialBlock[] | undefined,
@@ -27,9 +29,9 @@ export function useEditor(
       placeholders: {
         ...locale.placeholders,
         // We override the default placeholder
-        default: "Tell your story",
+        default: 'Tell your story',
         // We override the heading placeholder
-        heading: "Your title of story",
+        heading: 'Your title of story',
       },
     },
   });

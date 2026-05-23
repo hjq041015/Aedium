@@ -1,18 +1,17 @@
-import { useLocalStorage } from "react-use";
-import type { PartialBlock } from "@blocknote/core";
-import { isEditorEmptyAtom } from "@/atoms/editor.ts";
-import { EDITOR_DEFAULT } from "@/constants/editor.ts";
-import { debounce } from "es-toolkit";
-import { isEditorEmpty } from "@/utils/editorHelper.ts";
-import { useSetAtom } from "jotai";
+import type { PartialBlock } from '@blocknote/core';
 
-const DRAFT_KEY = "draft";
+import { debounce } from 'es-toolkit';
+import { useSetAtom } from 'jotai';
+import { useLocalStorage } from 'react-use';
+
+import { isEditorEmptyAtom } from '@/atoms/editor.ts';
+import { EDITOR_DEFAULT } from '@/constants/editor.ts';
+import { isEditorEmpty } from '@/utils/editorHelper.ts';
+
+const DRAFT_KEY = 'draft';
 
 export function useDraft() {
-  const [draft, setDraft] = useLocalStorage<PartialBlock[]>(
-    DRAFT_KEY,
-    EDITOR_DEFAULT,
-  );
+  const [draft, setDraft] = useLocalStorage<PartialBlock[]>(DRAFT_KEY, EDITOR_DEFAULT);
 
   const setIsEditorEmpty = useSetAtom(isEditorEmptyAtom);
 

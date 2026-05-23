@@ -1,33 +1,32 @@
-import { HeartIcon } from "@phosphor-icons/react";
-import type { Article } from "@/types/Article.ts";
-import { Link } from "@tanstack/react-router";
+import { HeartIcon } from '@phosphor-icons/react';
+import { Link } from '@tanstack/react-router';
+
+import type { Article } from '@/types/Article.ts';
 
 function ArticleListItem({ article }: { article: Article }) {
   function getArticleBrief(content: string, maxLength = 100) {
     const blocks = JSON.parse(content);
-    let brief = "";
+    let brief = '';
 
     brief = blocks
       .map((block: any) => {
-        let ownBrief = "";
-        let childBrief = "";
+        let ownBrief = '';
+        let childBrief = '';
 
         if (Array.isArray(block.content)) {
           ownBrief = block.content
             .map((item: any) => {
-              if (item.type === "text") {
+              if (item.type === 'text') {
                 return item.text;
               }
-              if (item.type === "link") {
+              if (item.type === 'link') {
                 if (Array.isArray(item.content)) {
-                  return item.content
-                    .map((child: any) => child.text ?? "")
-                    .join(" ");
+                  return item.content.map((child: any) => child.text ?? '').join(' ');
                 }
               }
-              return "";
+              return '';
             })
-            .join(" ");
+            .join(' ');
         }
 
         if (Array.isArray(block.children)) {
@@ -35,16 +34,16 @@ function ArticleListItem({ article }: { article: Article }) {
             .map((child: any) => {
               return getArticleBrief(JSON.stringify([child]), maxLength);
             })
-            .join(" ");
+            .join(' ');
         }
 
         return `${ownBrief} ${childBrief}`.trim();
       })
-      .join(" ")
+      .join(' ')
       .trim()
-      .replace(/\s+/g, " ");
+      .replace(/\s+/g, ' ');
 
-    return brief.length > maxLength ? brief.slice(0, maxLength) + "..." : brief;
+    return brief.length > maxLength ? brief.slice(0, maxLength) + '...' : brief;
   }
 
   return (
@@ -58,9 +57,7 @@ function ArticleListItem({ article }: { article: Article }) {
         </div>
         <div>
           {/* Title */}
-          <div className="text-2xl sm:text-5xl font-bold font-serif">
-            {article.title}
-          </div>
+          <div className="text-2xl sm:text-5xl font-bold font-serif">{article.title}</div>
 
           {/* Content brief */}
           <div className="sm:text-2xl text-sm font-semibold opacity-60">

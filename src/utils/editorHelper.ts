@@ -1,14 +1,9 @@
-import type { Block, BlockNoteEditor } from "@blocknote/core";
-import type { InsertArticle } from "@/types/Article.ts";
+import type { Block, BlockNoteEditor } from '@blocknote/core';
 
-type BlockContent = Block["content"];
-const CONTENTLESS_BLOCK_TYPES = new Set([
-  "audio",
-  "divider",
-  "image",
-  "video",
-  "file",
-]);
+import type { InsertArticle } from '@/types/Article.ts';
+
+type BlockContent = Block['content'];
+const CONTENTLESS_BLOCK_TYPES = new Set(['audio', 'divider', 'image', 'video', 'file']);
 
 export function isContentEmpty(content: BlockContent | undefined) {
   if (!content) {
@@ -23,11 +18,11 @@ export function isContentEmpty(content: BlockContent | undefined) {
   // the content is InlineContent[]
   return content.every((item) => {
     // styledText
-    if (item.type === "text") {
+    if (item.type === 'text') {
       return item.text.trim().length === 0;
     }
     // Link | CustomInlineContent
-    if ("content" in item && Array.isArray(item.content)) {
+    if ('content' in item && Array.isArray(item.content)) {
       return item.content.every((child) => {
         return child.text.trim().length === 0;
       });
@@ -49,11 +44,11 @@ export function isEditorEmpty(blocks: Block[]): boolean {
 export function buildArticleInsert(editor: BlockNoteEditor, userId: string): InsertArticle {
   const [headingBlock, ...contentBlock] = editor.document;
   const headingMarkdown = editor.blocksToMarkdownLossy([headingBlock]);
-  const title = headingMarkdown.replace("# ", "").trim();
+  const title = headingMarkdown.replace('# ', '').trim();
 
   return {
     title,
     content: JSON.stringify(contentBlock),
     author_id: userId,
-  }
+  };
 }

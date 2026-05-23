@@ -1,27 +1,22 @@
-import {
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@neondatabase/neon-js/auth/react";
-import { NotePencilIcon } from "@phosphor-icons/react";
-import { useLocation, useNavigate } from "@tanstack/react-router";
-import { useAtomValue, useSetAtom } from "jotai";
+import { SignedIn, SignedOut, UserButton } from '@neondatabase/neon-js/auth/react';
+import { NotePencilIcon } from '@phosphor-icons/react';
+import { useLocation, useNavigate } from '@tanstack/react-router';
+import { useAtomValue, useSetAtom } from 'jotai';
+
 import {
   editorEmptySignalAtom,
   editorPublishSignalAtom,
   editorUpdateSignalAtom,
   isEditorEmptyAtom,
-} from "@/atoms/editor.ts";
-import { Route as ArticleUpdateRoute } from "@/routes/_app/_protect/article.editor.$articleId.tsx";
-import { Route as EditorRoute } from "@/routes/_app/_protect/editor.tsx";
+} from '@/atoms/editor.ts';
+import { Route as ArticleUpdateRoute } from '@/routes/_app/_protect/article.editor.$articleId.tsx';
+import { Route as EditorRoute } from '@/routes/_app/_protect/editor.tsx';
 
 function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const isEditorPage = location.pathname === EditorRoute.to;
-  const isUpdatePage = location.pathname.includes(
-    ArticleUpdateRoute.to.split("$")[0],
-  );
+  const isUpdatePage = location.pathname.includes(ArticleUpdateRoute.to.split('$')[0]);
   const isEditorEmpty = useAtomValue(isEditorEmptyAtom);
   const setEditorEmptySignal = useSetAtom(editorEmptySignalAtom);
   const setEditorPublishSignal = useSetAtom(editorPublishSignalAtom);
@@ -57,7 +52,7 @@ function NavBar() {
             </svg>
           </label>
           <button
-            onClick={() => navigate({ to: "/" })}
+            onClick={() => navigate({ to: '/' })}
             className="btn btn-ghost text-xl lg:btn-lg lg:w-32"
           >
             Aedium
@@ -73,7 +68,7 @@ function NavBar() {
             {!isEditorPage && !isUpdatePage && (
               <button
                 className="btn btn-sm hidden sm:inline-flex sm:btn-md mr-1 btn-ghost"
-                onClick={() => navigate({ to: "/editor" })}
+                onClick={() => navigate({ to: '/editor' })}
               >
                 <NotePencilIcon size={24} weight="thin" />
                 Write
@@ -113,8 +108,8 @@ function NavBar() {
             <button
               onClick={() =>
                 navigate({
-                  to: "/auth/$pathname",
-                  params: { pathname: "sign-in" },
+                  to: '/auth/$pathname',
+                  params: { pathname: 'sign-in' },
                 })
               }
               className="btn  btn-primary  lg:w-24"

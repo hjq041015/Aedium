@@ -1,22 +1,21 @@
-import { editorUpdateSignalAtom } from "@/atoms/editor.ts";
-import ArticleEditorView from "@/features/article/ArticleEditorView";
-import Loading from "@/ui/Loading";
-import { useCurrentArticle, useUpdateArticle } from "@/hooks/article.ts";
-import { Route as ArticleEditorRoute } from "@/routes/_app/_protect/article.editor.$articleId.tsx";
-import { buildArticleInsert, isEditorEmpty } from "@/utils/editorHelper.ts";
-import { useCreateBlockNote } from "@blocknote/react";
-import { useBlocker, useNavigate } from "@tanstack/react-router";
-import { useAtom } from "jotai";
-import { useEffect, useRef } from "react";
+import { useCreateBlockNote } from '@blocknote/react';
+import { useBlocker, useNavigate } from '@tanstack/react-router';
+import { useAtom } from 'jotai';
+import { useEffect, useRef } from 'react';
+
+import { editorUpdateSignalAtom } from '@/atoms/editor.ts';
+import ArticleEditorView from '@/features/article/ArticleEditorView';
+import { useCurrentArticle, useUpdateArticle } from '@/hooks/article.ts';
+import { Route as ArticleEditorRoute } from '@/routes/_app/_protect/article.editor.$articleId.tsx';
+import Loading from '@/ui/Loading';
+import { buildArticleInsert, isEditorEmpty } from '@/utils/editorHelper.ts';
 
 function ArticleUpdate() {
   const navigate = useNavigate();
   const { articleId } = ArticleEditorRoute.useParams();
   const editor = useCreateBlockNote();
   const { article, isLoading } = useCurrentArticle(articleId);
-  const [editorUpdateSignal, setEditorUpdateSignal] = useAtom(
-    editorUpdateSignalAtom,
-  );
+  const [editorUpdateSignal, setEditorUpdateSignal] = useAtom(editorUpdateSignalAtom);
   const { handleUpdate } = useUpdateArticle();
   const initalArticle = useRef<null | string>(null);
   const dirty = useRef(false);
@@ -42,7 +41,7 @@ function ArticleUpdate() {
           onSuccess: () => {
             setEditorUpdateSignal(0);
             dirty.current = false;
-            navigate({ to: "/article/$articleId", params: { articleId } });
+            navigate({ to: '/article/$articleId', params: { articleId } });
           },
         },
       );
@@ -51,7 +50,7 @@ function ArticleUpdate() {
 
   useEffect(() => {
     editor.replaceBlocks(editor.document, [
-      { type: "heading", content: article.title, level: 1 },
+      { type: 'heading', content: article.title, level: 1 },
       ...JSON.parse(article.content),
     ]);
     if (!isLoading && article) {
@@ -68,7 +67,7 @@ function ArticleUpdate() {
         return false;
       }
       const shouldBlock = !window.confirm(
-        "You have unsaved changes. Are you sure you want to leave?",
+        'You have unsaved changes. Are you sure you want to leave?',
       );
 
       return shouldBlock;

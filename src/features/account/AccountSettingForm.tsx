@@ -1,29 +1,27 @@
-import Avatar from "@/ui/Avatar";
-import Loading from "@/ui/Loading";
-import { useChangeUserAvatar } from "@/hooks/userAvatar.ts";
-import { useUserUpdate } from "@/hooks/userInfo.ts";
-import { Route as securityRoute } from "@/routes/_app/_protect/account/security.tsx";
-import type { User } from "@/types/User.ts";
-import { Link } from "@tanstack/react-router";
-import { useForm, useStore } from "@tanstack/react-form";
-import { FieldInfo } from "@/ui/FieldInfo.tsx";
-import { profileUpdateSchema } from "@/schemas/UserProfileUpdarte";
+import { useForm, useStore } from '@tanstack/react-form';
+import { Link } from '@tanstack/react-router';
+
+import type { User } from '@/types/User.ts';
+
+import { useChangeUserAvatar } from '@/hooks/userAvatar.ts';
+import { useUserUpdate } from '@/hooks/userInfo.ts';
+import { Route as securityRoute } from '@/routes/_app/_protect/account/security.tsx';
+import { profileUpdateSchema } from '@/schemas/UserProfileUpdarte';
+import Avatar from '@/ui/Avatar';
+import { FieldInfo } from '@/ui/FieldInfo.tsx';
+import Loading from '@/ui/Loading';
 
 function AccountSettingForm({ user }: { user: User }) {
-  const { imageUrl, handleImageChange, currentAvatarFile } =
-    useChangeUserAvatar(user);
+  const { imageUrl, handleImageChange, currentAvatarFile } = useChangeUserAvatar(user);
 
-  const { isPending, handleUpdate, isUploading } = useUserUpdate(
-    user,
-    currentAvatarFile,
-  );
+  const { isPending, handleUpdate, isUploading } = useUserUpdate(user, currentAvatarFile);
 
   const form = useForm({
     validators: {
       onBlur: profileUpdateSchema,
     },
     defaultValues: {
-      username: user.name || "",
+      username: user.name || '',
     },
     onSubmit: ({ value: { username } }) => {
       handleUpdate({ username });
@@ -87,7 +85,7 @@ function AccountSettingForm({ user }: { user: User }) {
 
         <button disabled={isPending} className="btn btn-primary">
           {isPending && isUploading && <Loading />}
-          {!isPending && !isUploading && "Update"}
+          {!isPending && !isUploading && 'Update'}
         </button>
       </fieldset>
     </form>
