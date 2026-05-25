@@ -1,10 +1,12 @@
 import { HeartIcon } from '@phosphor-icons/react';
 import { Link } from '@tanstack/react-router';
 
-import type { Article } from '@/types/Article.ts';
+import type { ArticleDisplay } from '@/types/Article.ts';
 
-function ArticleListItem({ article }: { article: Article }) {
-  function getArticleBrief(content: string, maxLength = 100) {
+import Avatar from '@/ui/Avatar.tsx';
+
+function ArticleListItem({ articleDisplay }: { articleDisplay: ArticleDisplay }) {
+  function getArticleBrief(content: string, maxLength = 50) {
     const blocks = JSON.parse(content);
     let brief = '';
 
@@ -46,8 +48,32 @@ function ArticleListItem({ article }: { article: Article }) {
     return brief.length > maxLength ? brief.slice(0, maxLength) + '...' : brief;
   }
 
+  const articleUpdatedTime = new Intl.DateTimeFormat(undefined, {
+    hour: '2-digit',
+    minute: 'numeric',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
   return (
-    <Link to="/article/$articleId" params={{ articleId: `${article.id}` }}>
+    <Link to="/article/$articleId" params={{ articleId: `${articleDisplay.id}` }}>
+      <div className="m-4 flex  items-center gap-4">
+        <Avatar
+          avatarUrl={articleDisplay.author.image ?? ''}
+          username={articleDisplay.author.name}
+          size="sm"
+          className="w-10"
+        />
+        <div>
+          <div className="text-2xl" sm:text-4xl>
+            {articleDisplay.author.name}
+          </div>
+          <div className="opacity-50">
+            {articleUpdatedTime.format(new Date(articleDisplay.update_at))}
+          </div>
+        </div>
+      </div>
       <li className="list-row">
         <div>
           <img
@@ -57,11 +83,11 @@ function ArticleListItem({ article }: { article: Article }) {
         </div>
         <div>
           {/* Title */}
-          <div className="text-2xl sm:text-5xl font-bold font-serif">{article.title}</div>
+          <div className="text-2xl sm:text-5xl font-bold font-serif">{articleDisplay.title}</div>
 
           {/* Content brief */}
           <div className="sm:text-2xl text-sm font-semibold opacity-60">
-            {getArticleBrief(article.content)}
+            {getArticleBrief(articleDisplay.content)}
           </div>
         </div>
         <button className="btn btn-secondary btn-square btn-ghost">

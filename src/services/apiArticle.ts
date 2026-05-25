@@ -10,12 +10,12 @@ import { client } from '@/utils/nenoHelper.ts';
 const TABLE_NAME = 'article';
 
 export async function getArticles() {
-  const { data, error } = await client.from(TABLE_NAME).select('*');
+  const { data, error } = await client.from('article_with_user_profile').select('*');
 
   if (error) {
     throw error;
   }
-  return data;
+  return data.map((row) => mapToArticleDisplay(row));
 }
 
 export async function getArticleById(articleId: Number) {
