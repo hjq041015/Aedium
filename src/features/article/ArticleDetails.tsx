@@ -13,7 +13,7 @@ import UserCurrent from '@/ui/UserCurrent.tsx';
 function ArticleDetails() {
   const editor = useCreateBlockNote();
   const { articleId } = ArticleRoute.useParams();
-  const { articleDisplay, isLoading } = useCurrentArticle(articleId);
+  const { articleDisplay, isLoading, error, isError } = useCurrentArticle(articleId);
   const { handleDelete, isDeleteing } = useDeleteArticle();
   const navigate = useNavigate();
 
@@ -31,7 +31,23 @@ function ArticleDetails() {
     year: 'numeric',
   });
 
-  if (isLoading || !articleDisplay) return <Loading />;
+  if (isLoading) return <Loading />;
+
+  if (isError) {
+    return (
+      <main className="content-layout-h flex items-center justify-center">
+        <div className="text-error">{error?.message || 'Failed to load articles'}</div>
+      </main>
+    );
+  }
+
+  if (!articleDisplay) {
+    return (
+      <main className="content-layout-h flex items-center justify-center">
+        <div>No article found</div>
+      </main>
+    );
+  }
 
   return (
     <>

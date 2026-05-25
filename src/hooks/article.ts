@@ -33,7 +33,12 @@ export function usePublishArticle(user: User | null, editor: BlockNoteEditor) {
 }
 
 export function useCurrentArticle(articleId: string) {
-  const { data: articleDisplay, isLoading } = useQuery({
+  const {
+    data: articleDisplay,
+    isLoading,
+    error,
+    isError,
+  } = useQuery({
     queryKey: ['article', articleId],
     queryFn: async () => {
       const articleDisplay = await getArticleById(Number(articleId));
@@ -41,7 +46,7 @@ export function useCurrentArticle(articleId: string) {
     },
   });
 
-  return { articleDisplay, isLoading };
+  return { articleDisplay, isLoading, error, isError };
 }
 
 export function useUpdateArticle() {

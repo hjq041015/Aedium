@@ -85,11 +85,16 @@ function EmailVerifyForm() {
               )}
             />
 
-            <button disabled={isVerifying} className="btn btn-primary btn-lg mt-5 w-full">
+            <button
+              type="submit"
+              disabled={isVerifying}
+              className="btn btn-primary btn-lg mt-5 w-full"
+            >
               Verify
             </button>
 
             <button
+              type="submit"
               onClick={() => {
                 sendEmail();
                 setResendTimer(60);
