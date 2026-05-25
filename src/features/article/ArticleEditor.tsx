@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
@@ -14,6 +15,7 @@ function ArticleEditor() {
   const { draft, setDraft, saveDraft } = useDraft();
   const { editor, handleEditorChange, resetEditor } = useEditor(draft, setDraft, saveDraft);
   const user = useAtomValue(userAtom);
+  const navigete = useNavigate();
 
   const [editorPublishSignal, setEditorPublishSignal] = useAtom(editorPublishSignalAtom);
 
@@ -31,6 +33,7 @@ function ArticleEditor() {
             });
             resetEditor();
             setEditorPublishSignal(0);
+            navigete({ to: '/' });
           },
         },
       );

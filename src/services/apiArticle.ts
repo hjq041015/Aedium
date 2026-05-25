@@ -71,8 +71,7 @@ function mapToArticleDisplay(row: ArticleWithAuthorProfile): ArticleDisplay {
     !row.content ||
     !row.create_at ||
     !row.update_at ||
-    !row.name ||
-    !row.image
+    !row.name
   ) {
     throw new Error('Invalid article data');
   }
@@ -85,7 +84,7 @@ function mapToArticleDisplay(row: ArticleWithAuthorProfile): ArticleDisplay {
     update_at: row.update_at,
     author: {
       name: row.name,
-      image: row.image,
+      image: row.image ?? null,
     },
   };
 }

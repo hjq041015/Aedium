@@ -9,6 +9,7 @@ function ArticleList() {
     queryKey: ['get-article'],
     queryFn: getArticles,
   });
+
   if (isLoading || !articleDisplay) {
     return <Loading />;
   }
