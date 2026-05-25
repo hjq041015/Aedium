@@ -8,3 +8,4 @@ dist
 
 configs
 dev-dist
+.env
