@@ -14,14 +14,14 @@ function ArticleUpdate() {
   const navigate = useNavigate();
   const { articleId } = ArticleEditorRoute.useParams();
   const editor = useCreateBlockNote();
-  const { article, isLoading } = useCurrentArticle(articleId);
+  const { articleDisplay, isLoading } = useCurrentArticle(articleId);
   const [editorUpdateSignal, setEditorUpdateSignal] = useAtom(editorUpdateSignalAtom);
   const { handleUpdate } = useUpdateArticle();
   const initalArticle = useRef<null | string>(null);
   const dirty = useRef(false);
 
   function handleEditorChange() {
-    if (!article && !initalArticle.current) {
+    if (!articleDisplay && !initalArticle.current) {
       return;
     }
 
@@ -49,17 +49,21 @@ function ArticleUpdate() {
   }, [editorUpdateSignal]);
 
   useEffect(() => {
+    if (!articleDisplay) {
+      return;
+    }
+
     editor.replaceBlocks(editor.document, [
-      { type: 'heading', content: article.title, level: 1 },
-      ...JSON.parse(article.content),
+      { type: 'heading', content: articleDisplay.title, level: 1 },
+      ...JSON.parse(articleDisplay.content),
     ]);
-    if (!isLoading && article) {
+    if (!isLoading) {
       initalArticle.current = JSON.stringify({
-        title: article.title,
-        content: article.content,
+        title: articleDisplay.title,
+        content: articleDisplay.content,
       });
     }
-  }, [article, isLoading]);
+  }, [articleDisplay, isLoading]);
 
   useBlocker({
     shouldBlockFn: () => {

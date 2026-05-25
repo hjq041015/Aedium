@@ -32,7 +32,19 @@ export type Database = {
       };
     };
     Views: {
-      [_ in never]: never;
+      article_with_user_profile: {
+        Row: {
+          article_id: number | null;
+          author_id: string | null;
+          content: string | null;
+          create_at: string | null;
+          image: string | null;
+          name: string | null;
+          title: string | null;
+          update_at: string | null;
+        };
+        Relationships: [];
+      };
     };
     Functions: {
       [_ in never]: never;

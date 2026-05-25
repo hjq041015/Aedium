@@ -1,4 +1,9 @@
-import type { InsertArticle, UpdateArticle } from '@/types/Article.ts';
+import type {
+  ArticleDisplay,
+  ArticleWithAuthorProfile,
+  InsertArticle,
+  UpdateArticle,
+} from '@/types/Article.ts';
 
 import { client } from '@/utils/nenoHelper.ts';
 
@@ -14,12 +19,16 @@ export async function getArticles() {
 }
 
 export async function getArticleById(articleId: Number) {
-  const { data, error } = await client.from(TABLE_NAME).select('*').eq('id', articleId);
+  const { data, error } = await client
+    .from('article_with_user_profile')
+    .select('*')
+    .eq('article_id', articleId)
+    .single();
 
   if (error) {
     throw error;
   }
-  return data[0];
+  return mapToArticleDisplay(data);
 }
 
 export async function InsertArticle(insertArcile: InsertArticle) {
@@ -52,4 +61,31 @@ export async function deleteArticleById(articleId: number) {
   if (error) {
     throw error;
   }
+}
+
+function mapToArticleDisplay(row: ArticleWithAuthorProfile): ArticleDisplay {
+  if (
+    !row.article_id ||
+    !row.author_id ||
+    !row.title ||
+    !row.content ||
+    !row.create_at ||
+    !row.update_at ||
+    !row.name ||
+    !row.image
+  ) {
+    throw new Error('Invalid article data');
+  }
+  return {
+    id: row.article_id,
+    author_id: row.author_id,
+    title: row.title,
+    content: row.content,
+    create_at: row.create_at,
+    update_at: row.update_at,
+    author: {
+      name: row.name,
+      image: row.image,
+    },
+  };
 }
